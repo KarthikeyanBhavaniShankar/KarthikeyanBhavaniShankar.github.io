@@ -2,239 +2,328 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Karthikeyan Bhavani Shankar · Portfolio</title>
-  <meta name="description" content="Portfolio of Karthikeyan Bhavani Shankar — Computer Systems Engineering | ROS 2 · C++ · Jetson AGX Orin" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Karthikeyan Bhavani Shankar — Portfolio</title>
+  <meta name="description" content="Portfolio of Karthikeyan Bhavani Shankar — projects, skills, and experience." />
+  <meta property="og:title" content="Karthikeyan Bhavani Shankar — Portfolio" />
+  <meta property="og:description" content="Projects, skills, and experience." />
+  <meta property="og:type" content="website" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* ===== Design system ===== */
+    :root{
+      --bg: #0b0c0f;          /* dark background */
+      --fg: #e9ecf1;          /* foreground text */
+      --muted: #a7afbd;       /* muted text */
+      --card: #11131a;        /* card bg */
+      --accent: #6dd3fb;      /* accent */
+      --accent-2: #9b8cff;    /* secondary accent */
+      --border: #1c2030;
+      --link: #96baff;
+      --success: #48e1a8;
+      --warning: #f4c26b;
+      --danger: #ff6b6b;
+      --maxw: 1100px;
+      --radius: 18px;
+      --shadow: 0 8px 30px rgba(0,0,0,.25);
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #f7f8fb;
+        --fg: #0e1015;
+        --muted: #556074;
+        --card: #ffffff;
+        --accent: #0ea5e9;
+        --accent-2: #7c3aed;
+        --border: #e7e9f0;
+        --link: #1d4ed8;
+      }
+      .hero::before{ opacity:.06; }
+    }
+
+    /* ===== Base ===== */
+    *{ box-sizing: border-box }
+    html,body{ height:100% }
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--fg); background:var(--bg); line-height:1.6; letter-spacing:.1px;
+    }
+    a{ color:var(--link); text-decoration:none }
+    a:hover{ text-decoration:underline }
+    img{ max-width:100%; display:block }
+    .container{ max-width:var(--maxw); margin:0 auto; padding:0 20px }
+    .grid{ display:grid; gap:1.25rem }
+    .btn{
+      display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1rem; border-radius:12px; border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.04)); color:var(--fg); transition:.2s transform ease, .3s box-shadow ease;
+    }
+    .btn:hover{ transform:translateY(-1px); box-shadow:var(--shadow) }
+    .chip{ border:1px solid var(--border); background:var(--card); color:var(--muted); border-radius:999px; padding:.35rem .7rem; font-size:.85rem }
+    .card{
+      border:1px solid var(--border); background:var(--card); border-radius:var(--radius); padding:1rem; transition:.25s transform ease, .35s box-shadow ease, .25s border-color ease;
+    }
+    .card:hover{ transform:translateY(-2px); box-shadow:var(--shadow); border-color:rgba(109,211,251,.35) }
+    .muted{ color:var(--muted) }
+    .h1{ font-size:clamp(2rem, 5vw, 3.5rem); line-height:1.1; font-weight:800; letter-spacing:-.02em }
+    .h2{ font-size:clamp(1.6rem, 3vw, 2.2rem); line-height:1.2; font-weight:700 }
+    .h3{ font-size:1.1rem; font-weight:700 }
+    .mono{ font-feature-settings: "calt" 0; font-variant-ligatures: none; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* ===== Header ===== */
+    header{ position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(8px); background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0)); border-bottom:1px solid transparent }
+    @media (prefers-color-scheme: light){ header{ background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,0)); } }
+    nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 0 }
+    nav .links{ display:flex; gap:.8rem; align-items:center }
+    nav .links a{ padding:.45rem .7rem; border-radius:10px; border:1px solid transparent }
+    nav .links a:hover{ border-color:var(--border); text-decoration:none }
+
+    /* ===== Hero ===== */
+    .hero{ position:relative; padding:86px 0 36px }
+    .hero::before{
+      content:""; position:absolute; inset:-10% -5% auto -5%; height:60%; background:radial-gradient(60% 60% at 50% 0%, rgba(109,211,251,.18), rgba(0,0,0,0)); filter:blur(30px); pointer-events:none; opacity:.1;
+    }
+    .hero-inner{ display:grid; grid-template-columns:1.2fr .8fr; gap:2rem; align-items:center }
+    .hero .badge{ display:inline-flex; gap:.5rem; align-items:center; padding:.35rem .6rem; border-radius:999px; border:1px solid var(--border); background:var(--card); color:var(--muted); font-size:.85rem }
+    .hero-actions{ display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1rem }
+    .avatar{ width:140px; height:140px; border-radius:24px; overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow) }
+
+    /* ===== Sections ===== */
+    section{ padding:56px 0 }
+    .section-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px }
+    .section-head .h2{ margin:0 }
+
+    /* Skills */
+    .skills{ grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+    /* Projects */
+    .projects{ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .project-card .thumb{ aspect-ratio: 16 / 10; border-radius:14px; overflow:hidden; border:1px solid var(--border); margin-bottom:.8rem; background:
+      linear-gradient(45deg, rgba(109,211,251,.1), rgba(155,140,255,.1)); display:flex; align-items:center; justify-content:center; font-weight:600 }
+
+    /* Timeline */
+    .timeline{ position:relative; padding-left:20px }
+    .timeline::before{ content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(var(--accent), transparent) }
+    .timeline-item{ position:relative; padding:14px 0 14px 14px }
+    .timeline-item::before{ content:""; position:absolute; left:-2px; top:20px; width:10px; height:10px; border-radius:50%; background:var(--accent) }
+
+    /* Footer */
+    footer{ padding:36px 0 80px; border-top:1px solid var(--border); color:var(--muted) }
+
+    /* Utilities */
+    .row{ display:flex; gap:1rem; flex-wrap:wrap; align-items:center }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0 }
+  </style>
 </head>
 <body>
-  <a href="#main" class="skip-link">Skip to content</a>
-  <header class="site-header">
-    <div class="container nav">
-      <div class="brand">
-        <span class="dot"></span>
-        <a href="#" aria-label="Homepage">Karthikeyan</a>
-      </div>
-      <nav aria-label="Primary">
-        <button id="themeToggle" class="btn ghost" aria-pressed="false" aria-label="Toggle theme">🌗</button>
-        <a class="btn ghost" href="#projects">Projects</a>
-        <a class="btn ghost" href="#skills">Skills</a>
-        <a class="btn solid" href="#contact">Contact</a>
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="row" aria-label="Home">
+          <span class="chip">KB</span>
+          <strong>Karthikeyan</strong>
+        </a>
+        <div class="links">
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+          <button id="themeToggle" class="btn mono" type="button" aria-label="Toggle theme">☀︎/☾</button>
+        </div>
       </nav>
     </div>
   </header>
 
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Computer Systems Engineering</p>
-          <h1>Hello, I'm <span class="accent">Karthikeyan Bhavani Shankar</span> 👋</h1>
-          <p class="lede">
-            I build reliable, real‑time systems where <strong>hardware</strong> meets <strong>software</strong> —
-            from ROS 2 navigation on Jetson AGX Orin to multi‑threaded Java simulations.
-          </p>
-          <div class="cta-row">
-            <a class="btn solid" href="mailto:karthikeyanbhavanis@cmail.carleton.ca">Email me</a>
-            <a class="btn outline" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar">GitHub</a>
-            <a class="btn outline" target="_blank" rel="noopener" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/">LinkedIn</a>
-          </div>
-          <ul class="badges" aria-label="Key strengths">
-            <li>ROS 2 · EKF</li>
-            <li>C/C++</li>
-            <li>Jetson AGX Orin</li>
-            <li>Linux</li>
-          </ul>
+  <!-- ===== Hero ===== -->
+  <main id="home" class="hero">
+    <div class="container hero-inner">
+      <div>
+        <span class="hero badge">Available for new opportunities</span>
+        <h1 class="h1" style="margin:.6rem 0 0">Hi, I’m <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent">Karthikeyan</span>.</h1>
+        <p class="muted" style="font-size:1.05rem; margin:.8rem 0 0">I design and build reliable software systems — from frontends that feel instant to backends that scale. This is a clean, single‑file portfolio you can drop into GitHub Pages.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn"><span>View projects</span> →</a>
+          <a href="https://karthikeyanbhavanishankar.github.io/#skills" class="btn" rel="noopener">Existing site</a>
+          <a href="#contact" class="btn" title="Get in touch">Contact</a>
         </div>
-        <div class="hero-card" aria-hidden="true">
-          <div class="card chip">
-            <div class="chip-core"></div>
-            <div class="chip-lines"></div>
-          </div>
-          <div class="card stat">
-            <div class="stat-num">80%</div>
-            <div class="stat-label">Drift reduction<br/>via EKF tuning</div>
-          </div>
-          <div class="card stat">
-            <div class="stat-num">4+</div>
-            <div class="stat-label">Major projects</div>
-          </div>
+        <div class="row" style="margin-top:1rem">
+          <span class="chip">JavaScript</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">React</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">AWS</span>
         </div>
       </div>
-      <div class="hero-bg"></div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="section">
-      <div class="container section-head">
-        <h2>Projects</h2>
-        <div class="filters" role="tablist" aria-label="Project filters">
-          <button class="chip-tab active" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button class="chip-tab" data-filter="embedded" role="tab" aria-selected="false">Embedded</button>
-          <button class="chip-tab" data-filter="software" role="tab" aria-selected="false">Software</button>
+      <div style="justify-self:end">
+        <div class="avatar">
+          <!-- Replace with your photo -->
+          <img src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="Avatar placeholder"/>
         </div>
       </div>
-
-      <div class="container cards">
-        <article class="project-card" data-tags="embedded">
-          <header>
-            <h3>Autonomous Navigation System</h3>
-            <span class="pill">ROS 2 · EKF · Jetson</span>
-          </header>
-          <p>GNSS + IMU localization on NVIDIA Jetson AGX Orin with ROS 2 Humble. Tuned EKF and deployed via Linux systemd; validated outdoors in RViz2 with ~80% drift reduction.</p>
-          <footer>
-            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/Carleton-AAV-Capstone/Navigation">Repo →</a>
-            <span class="stack">Python · C++ · ROS 2 · Ubuntu</span>
-          </footer>
-        </article>
-
-        <article class="project-card" data-tags="software">
-          <header>
-            <h3>Elevator System GUI</h3>
-            <span class="pill">Java · Threads</span>
-          </header>
-          <p>Multi‑threaded scheduler + GUI simulation of an elevator subsystem. Built robust test cases for reliability and realistic timing between modules.</p>
-          <footer>
-            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI">Repo →</a>
-            <span class="stack">Java · IntelliJ · Swing/JavaFX</span>
-          </footer>
-        </article>
-
-        <article class="project-card" data-tags="software">
-          <header>
-            <h3>Book Sorting Visualizer</h3>
-            <span class="pill">Python · Pygame</span>
-          </header>
-          <p>Interactive visualization of data‑structure sorting algorithms and operations using Python/Pygame with clear animations.</p>
-          <footer>
-            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI">Repo →</a>
-            <span class="stack">Python · Pygame</span>
-          </footer>
-        </article>
-
-        <article class="project-card" data-tags="embedded">
-          <header>
-            <h3>Interrupt System Simulator</h3>
-            <span class="pill">C++ · Systems</span>
-          </header>
-          <p>Interrupt‑driven simulation demonstrating save/restore timing and ISR activity windows; explores end‑to‑end CPU utilization.</p>
-          <footer>
-            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar/SYSC4001">Repo →</a>
-            <span class="stack">C++ · Linux</span>
-          </footer>
-        </article>
-      </div>
-
-      <p class="container caveat">Note: Org/private repos may 404. Fork publicly or add a summary repo for external viewers.</p>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="section">
-      <div class="container">
-        <h2>Skills</h2>
-        <div class="skills-grid">
-          <div class="skill">
-            <span>Languages</span>
-            <p>C, C++, Python, Java, JavaScript, SQL, VHDL/Verilog, Go</p>
-          </div>
-          <div class="skill">
-            <span>Frameworks & Libraries</span>
-            <p>ROS 2 (Nav2, RViz2), TensorFlow, Keras, Flask, React, Node.js, Django, Pygame, JavaFX</p>
-          </div>
-          <div class="skill">
-            <span>Cloud / DevOps</span>
-            <p>AWS, GCP, Jenkins, SSH Tunneling, Ubuntu Administration</p>
-          </div>
-          <div class="skill">
-            <span>Data & Databases</span>
-            <p>pandas, NumPy, Matplotlib, PostgreSQL, SQLite</p>
-          </div>
-          <div class="skill">
-            <span>Hardware & Embedded</span>
-            <p>Jetson AGX Orin, u‑blox ZED‑F9R GNSS, IMUs, Pololu VL53L1X ToF, FPGA</p>
-          </div>
-          <div class="skill">
-            <span>Core Competencies</span>
-            <p>Sensor Fusion · Localization · Control Systems · Embedded Architecture</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TIMELINE -->
-    <section class="section" id="timeline">
-      <div class="container">
-        <h2>Highlights</h2>
-        <ol class="timeline">
-          <li>
-            <span class="t-bullet"></span>
-            <div>
-              <h4>Reduced localization drift by ~80%</h4>
-              <p>Through EKF parameter tuning and fusion logic improvements on ROS 2.</p>
-            </div>
-          </li>
-          <li>
-            <span class="t-bullet"></span>
-            <div>
-              <h4>Deployed on Jetson AGX Orin</h4>
-              <p>Automated GNSS + RTK streaming with systemd; validated in outdoor tests.</p>
-            </div>
-          </li>
-          <li>
-            <span class="t-bullet"></span>
-            <div>
-              <h4>Multi‑threaded Java simulation</h4>
-              <p>Built elevator scheduling system with GUI and comprehensive tests.</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="container contact">
-        <div>
-          <h2>Contact</h2>
-          <p>Best way to reach me is email or LinkedIn. I’m open to internships and new‑grad roles in embedded systems, robotics, or platform engineering.</p>
-          <ul class="contact-list">
-            <li>📧 <a href="mailto:karthikeyanbhavanis@cmail.carleton.ca">karthikeyanbhavanis@cmail.carleton.ca</a></li>
-            <li>💼 <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/">LinkedIn</a></li>
-            <li>🖥️ <a target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar">GitHub</a></li>
-          </ul>
-        </div>
-        <form class="contact-card" action="mailto:karthikeyanbhavanis@cmail.carleton.ca" method="post" enctype="text/plain">
-          <h3>Quick message</h3>
-          <label>
-            <span>Name</span>
-            <input name="name" type="text" placeholder="Your name" required />
-          </label>
-          <label>
-            <span>Email</span>
-            <input name="email" type="email" placeholder="your@email.com" required />
-          </label>
-          <label>
-            <span>Message</span>
-            <textarea name="message" rows="4" placeholder="Hi Karthikeyan, let's talk about..." required></textarea>
-          </label>
-          <button class="btn solid" type="submit">Send</button>
-          <p class="tiny">This opens your email client to send the message.</p>
-        </form>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
+  <!-- ===== Projects ===== -->
+  <section id="projects">
     <div class="container">
-      <p>© 2025 Karthikeyan Bhavani Shankar · Built with HTML/CSS/JS · <a href="#top">Back to top ↑</a></p>
+      <div class="section-head">
+        <h2 class="h2">Projects</h2>
+        <a class="btn" href="https://github.com/karthikeyanbhavanishankar" target="_blank" rel="noopener">GitHub profile</a>
+      </div>
+      <div class="grid projects">
+        <!-- Project 1 -->
+        <article class="card project-card">
+          <a class="thumb" href="#" aria-label="Project link">Preview</a>
+          <div class="row" style="justify-content:space-between">
+            <div class="h3">Project Name</div>
+            <div class="mono" style="font-size:.9rem">2025</div>
+          </div>
+          <p class="muted">One‑line summary of what the project does and the value it provides. Include metrics if possible.</p>
+          <div class="row">
+            <span class="chip">React</span>
+            <span class="chip">Vite</span>
+            <span class="chip">Cloudflare</span>
+          </div>
+        </article>
+        <!-- Project 2 -->
+        <article class="card project-card">
+          <a class="thumb" href="#" aria-label="Project link">Preview</a>
+          <div class="row" style="justify-content:space-between">
+            <div class="h3">Another Project</div>
+            <div class="mono" style="font-size:.9rem">2024</div>
+          </div>
+          <p class="muted">Brief impact statement. Example: cut API latency by 47% at p95 using Redis + async pipeline.</p>
+          <div class="row">
+            <span class="chip">Node.js</span>
+            <span class="chip">Postgres</span>
+            <span class="chip">Redis</span>
+          </div>
+        </article>
+        <!-- Project 3 -->
+        <article class="card project-card">
+          <a class="thumb" href="#" aria-label="Project link">Preview</a>
+          <div class="row" style="justify-content:space-between">
+            <div class="h3">Mobile App</div>
+            <div class="mono" style="font-size:.9rem">2023</div>
+          </div>
+          <p class="muted">Small descriptive line with your contribution (architecture, features, perf wins).</p>
+          <div class="row">
+            <span class="chip">React Native</span>
+            <span class="chip">Firebase</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Skills ===== -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="h2">Skills</h2>
+        <a class="btn" href="https://karthikeyanbhavanishankar.github.io/#skills">See original</a>
+      </div>
+      <div class="grid skills">
+        <div class="card"><div class="h3">Frontend</div><p class="muted">React, Next.js, TypeScript, Tailwind, Vite, Zustand</p></div>
+        <div class="card"><div class="h3">Backend</div><p class="muted">Node.js, Express/Fastify, NestJS, GraphQL, REST</p></div>
+        <div class="card"><div class="h3">Data</div><p class="muted">Postgres, MySQL, Prisma, Redis, Kafka</p></div>
+        <div class="card"><div class="h3">Cloud/DevOps</div><p class="muted">AWS, Docker, Terraform, CI/CD (GitHub Actions)</p></div>
+        <div class="card"><div class="h3">Testing/Quality</div><p class="muted">Jest, Playwright, Cypress, k6</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Experience (Timeline) ===== -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="h2">Experience</h2>
+        <span class="muted">Reverse‑chronological</span>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item card">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div class="h3">Senior Software Engineer — Company</div>
+              <div class="muted">Product area • City, Country</div>
+            </div>
+            <div class="mono">2023 — Present</div>
+          </div>
+          <ul>
+            <li>Shipped XYZ feature used by 100k+ users monthly.</li>
+            <li>Improved build times by 35% with Turborepo caching.</li>
+            <li>Led migration to AWS Fargate with IaC.</li>
+          </ul>
+        </div>
+        <div class="timeline-item card">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div class="h3">Software Engineer — Company</div>
+              <div class="muted">Team • City</div>
+            </div>
+            <div class="mono">2021 — 2023</div>
+          </div>
+          <ul>
+            <li>Designed multi‑tenant RBAC module with row‑level security.</li>
+            <li>Cut p95 latency by 47% via queue + cache.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="h2">Contact</h2>
+        <span class="muted">Let’s build something great</span>
+      </div>
+      <div class="card">
+        <p>Open to freelance and full‑time roles. The fastest way to reach me is email.</p>
+        <div class="row">
+          <a class="btn" href="mailto:youremail@example.com">youremail@example.com</a>
+          <a class="btn" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/karthikeyanbhavanishankar" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row" style="justify-content:space-between">
+        <div>© <span id="year"></span> Karthikeyan Bhavani Shankar</div>
+        <div class="muted">Built with ❤️ — single‑file, no framework</div>
+      </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){ e.preventDefault(); document.querySelector(id).scrollIntoView({behavior:'smooth'}); }
+      })
+    });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle (persisted)
+    const THEME_KEY = 'kb-theme'
+    const root = document.documentElement
+    const saved = localStorage.getItem(THEME_KEY)
+    if(saved){ root.style.colorScheme = saved }
+    document.getElementById('themeToggle').addEventListener('click', ()=>{
+      const next = (root.style.colorScheme === 'light') ? 'dark' : 'light'
+      root.style.colorScheme = next
+      localStorage.setItem(THEME_KEY, next)
+    })
+  </script>
 </body>
 </html>
