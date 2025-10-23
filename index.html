@@ -3,181 +3,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Karthikeyan Bhavani Shankar | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root { --gold:#ffdd57; --bg1:#1E3C72; --bg2:#2A5298; }
-    *{box-sizing:border-box}
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, var(--bg1), var(--bg2));
-      color: white;
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-    }
-    header {
-      text-align: center;
-      padding: 120px 20px 80px;
-      background: radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,0.06), rgba(0,0,0,0));
-    }
-    header h1 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      margin-bottom: 10px;
-      line-height: 1.15;
-    }
-    header p {
-      font-size: clamp(1rem, 2.2vw, 1.25rem);
-      color: #e3e7ef;
-      margin: 0 auto 18px;
-      max-width: 900px;
-    }
-    .buttons a {
-      display: inline-block;
-      background: white;
-      color: var(--bg1);
-      margin: 10px;
-      padding: 12px 24px;
-      border-radius: 10px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform .15s ease, box-shadow .2s ease;
-      box-shadow: 0 8px 24px rgba(0,0,0,.2);
-    }
-    .buttons a:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
-    main { padding: 0 5vw 40px; }
-    section {
-      padding: 48px min(6vw, 64px);
-      background-color: rgba(0,0,0,0.18);
-      margin: 20px auto;
-      border-radius: 16px;
-      max-width: 1200px;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    h2 {
-      color: var(--gold);
-      margin: 0 0 18px;
-      letter-spacing: 0.3px;
-      font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-    }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
-      margin-top: 10px;
-    }
-    .skill {
-      background-color: rgba(255,255,255,0.08);
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-    }
-    .project {
-      background-color: rgba(255,255,255,0.08);
-      padding: 18px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .project h3 { margin-top: 0; }
-    .project a {
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .project a:hover { text-decoration: underline; }
-    footer {
-      text-align: center;
-      padding: 40px 20px 60px;
-      font-size: 0.95rem;
-      color: #e3e7ef;
-    }
-  </style>
+  <title>Karthikeyan Bhavani Shankar · Portfolio</title>
+  <meta name="description" content="Portfolio of Karthikeyan Bhavani Shankar — Computer Systems Engineering | ROS 2 · C++ · Jetson AGX Orin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 </head>
 <body>
-  <header>
-    <h1>Hello, I'm Karthikeyan Bhavani Shankar 👋</h1>
-    <p>Computer Systems Engineering | ROS 2 • C++ • Jetson AGX Orin</p>
-    <div class="buttons">
-      <a href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noopener">GitHub</a>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">
+        <span class="dot"></span>
+        <a href="#" aria-label="Homepage">Karthikeyan</a>
+      </div>
+      <nav aria-label="Primary">
+        <button id="themeToggle" class="btn ghost" aria-pressed="false" aria-label="Toggle theme">🌗</button>
+        <a class="btn ghost" href="#projects">Projects</a>
+        <a class="btn ghost" href="#skills">Skills</a>
+        <a class="btn solid" href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>
-        I'm a 4th-year Computer Systems Engineering student at Carleton University passionate about embedded systems,
-        robotics, and intelligent automation. I’ve built real-time localization and navigation systems using ROS 2, GNSS,
-        and IMU fusion on the NVIDIA Jetson AGX Orin. I love exploring how hardware and software converge to create
-        smarter, autonomous systems.
-      </p>
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Computer Systems Engineering</p>
+          <h1>Hello, I'm <span class="accent">Karthikeyan Bhavani Shankar</span> 👋</h1>
+          <p class="lede">
+            I build reliable, real‑time systems where <strong>hardware</strong> meets <strong>software</strong> —
+            from ROS 2 navigation on Jetson AGX Orin to multi‑threaded Java simulations.
+          </p>
+          <div class="cta-row">
+            <a class="btn solid" href="mailto:karthikeyanbhavanis@cmail.carleton.ca">Email me</a>
+            <a class="btn outline" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar">GitHub</a>
+            <a class="btn outline" target="_blank" rel="noopener" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/">LinkedIn</a>
+          </div>
+          <ul class="badges" aria-label="Key strengths">
+            <li>ROS 2 · EKF</li>
+            <li>C/C++</li>
+            <li>Jetson AGX Orin</li>
+            <li>Linux</li>
+          </ul>
+        </div>
+        <div class="hero-card" aria-hidden="true">
+          <div class="card chip">
+            <div class="chip-core"></div>
+            <div class="chip-lines"></div>
+          </div>
+          <div class="card stat">
+            <div class="stat-num">80%</div>
+            <div class="stat-label">Drift reduction<br/>via EKF tuning</div>
+          </div>
+          <div class="card stat">
+            <div class="stat-num">4+</div>
+            <div class="stat-label">Major projects</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-bg"></div>
     </section>
 
-    <section id="skills">
-      <h2>Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="skill">C/C++</div>
-        <div class="skill">Python</div>
-        <div class="skill">Java</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">Verilog / VHDL</div>
-        <div class="skill">ROS 2</div>
-        <div class="skill">Jetson AGX Orin</div>
-        <div class="skill">MATLAB</div>
-        <div class="skill">TensorFlow</div>
-        <div class="skill">PostgreSQL</div>
-        <div class="skill">SQLite</div>
-        <div class="skill">Git / GitHub</div>
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="container section-head">
+        <h2>Projects</h2>
+        <div class="filters" role="tablist" aria-label="Project filters">
+          <button class="chip-tab active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="chip-tab" data-filter="embedded" role="tab" aria-selected="false">Embedded</button>
+          <button class="chip-tab" data-filter="software" role="tab" aria-selected="false">Software</button>
+        </div>
+      </div>
+
+      <div class="container cards">
+        <article class="project-card" data-tags="embedded">
+          <header>
+            <h3>Autonomous Navigation System</h3>
+            <span class="pill">ROS 2 · EKF · Jetson</span>
+          </header>
+          <p>GNSS + IMU localization on NVIDIA Jetson AGX Orin with ROS 2 Humble. Tuned EKF and deployed via Linux systemd; validated outdoors in RViz2 with ~80% drift reduction.</p>
+          <footer>
+            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/Carleton-AAV-Capstone/Navigation">Repo →</a>
+            <span class="stack">Python · C++ · ROS 2 · Ubuntu</span>
+          </footer>
+        </article>
+
+        <article class="project-card" data-tags="software">
+          <header>
+            <h3>Elevator System GUI</h3>
+            <span class="pill">Java · Threads</span>
+          </header>
+          <p>Multi‑threaded scheduler + GUI simulation of an elevator subsystem. Built robust test cases for reliability and realistic timing between modules.</p>
+          <footer>
+            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI">Repo →</a>
+            <span class="stack">Java · IntelliJ · Swing/JavaFX</span>
+          </footer>
+        </article>
+
+        <article class="project-card" data-tags="software">
+          <header>
+            <h3>Book Sorting Visualizer</h3>
+            <span class="pill">Python · Pygame</span>
+          </header>
+          <p>Interactive visualization of data‑structure sorting algorithms and operations using Python/Pygame with clear animations.</p>
+          <footer>
+            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI">Repo →</a>
+            <span class="stack">Python · Pygame</span>
+          </footer>
+        </article>
+
+        <article class="project-card" data-tags="embedded">
+          <header>
+            <h3>Interrupt System Simulator</h3>
+            <span class="pill">C++ · Systems</span>
+          </header>
+          <p>Interrupt‑driven simulation demonstrating save/restore timing and ISR activity windows; explores end‑to‑end CPU utilization.</p>
+          <footer>
+            <a class="btn text" target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar/SYSC4001">Repo →</a>
+            <span class="stack">C++ · Linux</span>
+          </footer>
+        </article>
+      </div>
+
+      <p class="container caveat">Note: Org/private repos may 404. Fork publicly or add a summary repo for external viewers.</p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="container">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+          <div class="skill">
+            <span>Languages</span>
+            <p>C, C++, Python, Java, JavaScript, SQL, VHDL/Verilog, Go</p>
+          </div>
+          <div class="skill">
+            <span>Frameworks & Libraries</span>
+            <p>ROS 2 (Nav2, RViz2), TensorFlow, Keras, Flask, React, Node.js, Django, Pygame, JavaFX</p>
+          </div>
+          <div class="skill">
+            <span>Cloud / DevOps</span>
+            <p>AWS, GCP, Jenkins, SSH Tunneling, Ubuntu Administration</p>
+          </div>
+          <div class="skill">
+            <span>Data & Databases</span>
+            <p>pandas, NumPy, Matplotlib, PostgreSQL, SQLite</p>
+          </div>
+          <div class="skill">
+            <span>Hardware & Embedded</span>
+            <p>Jetson AGX Orin, u‑blox ZED‑F9R GNSS, IMUs, Pololu VL53L1X ToF, FPGA</p>
+          </div>
+          <div class="skill">
+            <span>Core Competencies</span>
+            <p>Sensor Fusion · Localization · Control Systems · Embedded Architecture</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="projects">
-        <div class="project">
-          <h3>Autonomous Navigation System (Capstone)</h3>
-          <p>GNSS + IMU localization using ROS 2 and EKF on Jetson AGX Orin. Reduced positional drift by 80%.</p>
-          <p><a href="https://github.com/Carleton-AAV-Capstone/Navigation" target="_blank" rel="noopener">View on GitHub →</a></p>
-        </div>
-        <div class="project">
-          <h3>Elevator System GUI</h3>
-          <p>Java-based multi-threaded elevator scheduling simulation with an intuitive graphical interface.</p>
-          <p><a href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI" target="_blank" rel="noopener">View on GitHub →</a></p>
-        </div>
-        <div class="project">
-          <h3>Book Sorting Visualizer</h3>
-          <p>Python-based visualization of data structure sorting algorithms using Pygame.</p>
-          <p><a href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI" target="_blank" rel="noopener">View on GitHub →</a></p>
-        </div>
-        <div class="project">
-          <h3>Interrupt System Simulator</h3>
-          <p>C++ implementation of an interrupt-driven system simulation demonstrating context switching.</p>
-          <p><a href="https://github.com/KarthikeyanBhavaniShankar/SYSC4001" target="_blank" rel="noopener">View on GitHub →</a></p>
-        </div>
+    <!-- TIMELINE -->
+    <section class="section" id="timeline">
+      <div class="container">
+        <h2>Highlights</h2>
+        <ol class="timeline">
+          <li>
+            <span class="t-bullet"></span>
+            <div>
+              <h4>Reduced localization drift by ~80%</h4>
+              <p>Through EKF parameter tuning and fusion logic improvements on ROS 2.</p>
+            </div>
+          </li>
+          <li>
+            <span class="t-bullet"></span>
+            <div>
+              <h4>Deployed on Jetson AGX Orin</h4>
+              <p>Automated GNSS + RTK streaming with systemd; validated in outdoor tests.</p>
+            </div>
+          </li>
+          <li>
+            <span class="t-bullet"></span>
+            <div>
+              <h4>Multi‑threaded Java simulation</h4>
+              <p>Built elevator scheduling system with GUI and comprehensive tests.</p>
+            </div>
+          </li>
+        </ol>
       </div>
-      <p style="margin-top:10px;color:#e3e7ef;">
-        Note: If any repository is private or organization-restricted, consider forking it publicly or creating a summary repo.
-      </p>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>📧 <strong>Email:</strong> <a href="mailto:karthikeyanbhavanis@cmail.carleton.ca" style="color:#ffdd57;">karthikeyanbhavanis@cmail.carleton.ca</a></p>
-      <p>🔗 <a href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" rel="noopener" style="color:#ffdd57;">LinkedIn</a> |
-         <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noopener" style="color:#ffdd57;">GitHub</a></p>
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container contact">
+        <div>
+          <h2>Contact</h2>
+          <p>Best way to reach me is email or LinkedIn. I’m open to internships and new‑grad roles in embedded systems, robotics, or platform engineering.</p>
+          <ul class="contact-list">
+            <li>📧 <a href="mailto:karthikeyanbhavanis@cmail.carleton.ca">karthikeyanbhavanis@cmail.carleton.ca</a></li>
+            <li>💼 <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/">LinkedIn</a></li>
+            <li>🖥️ <a target="_blank" rel="noopener" href="https://github.com/KarthikeyanBhavaniShankar">GitHub</a></li>
+          </ul>
+        </div>
+        <form class="contact-card" action="mailto:karthikeyanbhavanis@cmail.carleton.ca" method="post" enctype="text/plain">
+          <h3>Quick message</h3>
+          <label>
+            <span>Name</span>
+            <input name="name" type="text" placeholder="Your name" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" placeholder="your@email.com" required />
+          </label>
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="4" placeholder="Hi Karthikeyan, let's talk about..." required></textarea>
+          </label>
+          <button class="btn solid" type="submit">Send</button>
+          <p class="tiny">This opens your email client to send the message.</p>
+        </form>
+      </div>
     </section>
   </main>
 
-  <footer>
-    © 2025 Karthikeyan Bhavani Shankar | Built with 💻 and passion.
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Karthikeyan Bhavani Shankar · Built with HTML/CSS/JS · <a href="#top">Back to top ↑</a></p>
+    </div>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
