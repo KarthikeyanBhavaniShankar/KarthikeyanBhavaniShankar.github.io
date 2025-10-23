@@ -97,53 +97,84 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Selected Projects</h2>
-          <div class="filters" role="tablist" aria-label="Filter projects">
-            <button class="chip-tab active" role="tab" data-filter="all" aria-selected="true">All</button>
-            <button class="chip-tab" role="tab" data-filter="ros2">ROS 2</button>
-            <button class="chip-tab" role="tab" data-filter="java">Java</button>
-            <button class="chip-tab" role="tab" data-filter="python">Python</button>
-          </div>
-        </div>
-
-        <div class="cards">
-          <!-- Project 1 -->
-          <article class="project-card" data-tags="ros2,ekf,jetson,localization">
-            <header>
-              <a class="pill" href="https://github.com/Carleton-AAV-Capstone/GNSS" target="_blank" rel="noopener">Capstone</a>
-              <span class="stack">ROS 2 • EKF • Jetson</span>
-            </header>
-            <h3>Autonomous Navigation System</h3>
-            <p>GNSS + IMU fusion on NVIDIA Jetson AGX Orin using ROS 2 Humble and an Extended Kalman Filter, reducing positional drift ~80% in outdoor tests.</p>
-          </article>
-
-          <!-- Project 2 -->
-          <article class="project-card" data-tags="java,simulation,gui">
-            <header>
-              <a class="pill" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI" target="_blank" rel="noopener">JavaFX</a>
-              <span class="stack">Concurrency • UI</span>
-            </header>
-            <h3>ElevatorSystemGUI</h3>
-            <p>Multi-threaded Java elevator scheduling simulator with a JavaFX interface and throughput / wait-time metrics.</p>
-          </article>
-
-          <!-- Project 3 -->
-          <article class="project-card" data-tags="python,visualization,education">
-            <header>
-              <a class="pill" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI" target="_blank" rel="noopener">Python</a>
-              <span class="stack">Algorithms • UI</span>
-            </header>
-            <h3>booksortingUI</h3>
-            <p>Data-structures & sorting algorithm visualizer built in Python — great for demos and teaching.</p>
-          </article>
-        </div>
-
-        <p class="caveat">More on GitHub → <a href="https://github.com/KarthikeyanBhavaniShankar?tab=repositories" target="_blank" rel="noopener">repositories</a></p>
+ <section id="projects" class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Selected Projects</h2>
+      <div class="filters" role="tablist" aria-label="Filter projects">
+        <button class="chip-tab active" role="tab" data-filter="all" aria-selected="true">All</button>
+        <button class="chip-tab" role="tab" data-filter="ros2">ROS 2</button>
+        <button class="chip-tab" role="tab" data-filter="java">Java</button>
+        <button class="chip-tab" role="tab" data-filter="python">Python</button>
       </div>
-    </section>
+    </div>
+
+    <div class="cards">
+      <!-- Project 1 -->
+      <article class="project-card" data-tags="ros2,ekf,jetson,localization">
+        <a class="thumb" href="https://github.com/Carleton-AAV-Capstone/GNSS#readme" target="_blank" rel="noopener" aria-label="Open project website / README">
+          Preview
+        </a>
+        <header>
+          <div class="row">
+            <a class="pill" href="https://github.com/Carleton-AAV-Capstone/GNSS#readme" target="_blank" rel="noopener">Capstone</a>
+          </div>
+          <div class="row">
+            <span class="stack">ROS 2 • EKF • Jetson</span>
+            <a class="icon-btn" href="https://github.com/Carleton-AAV-Capstone/GNSS" target="_blank" rel="noopener" aria-label="View source on GitHub">
+              <!-- GitHub icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
+            </a>
+          </div>
+        </header>
+        <h3>Autonomous Navigation System</h3>
+        <p>GNSS + IMU fusion on NVIDIA Jetson AGX Orin using ROS 2 Humble and an Extended Kalman Filter, reducing positional drift ~80% in outdoor tests.</p>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card" data-tags="java,simulation,gui">
+        <a class="thumb" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI#readme" target="_blank" rel="noopener" aria-label="Open project website / README">
+          Preview
+        </a>
+        <header>
+          <div class="row">
+            <a class="pill" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI#readme" target="_blank" rel="noopener">JavaFX</a>
+          </div>
+          <div class="row">
+            <span class="stack">Concurrency • UI</span>
+            <a class="icon-btn" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI" target="_blank" rel="noopener" aria-label="View source on GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
+            </a>
+          </div>
+        </header>
+        <h3>ElevatorSystemGUI</h3>
+        <p>Multi-threaded Java elevator scheduling simulator with a JavaFX interface and throughput / wait-time metrics.</p>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card" data-tags="python,visualization,education">
+        <a class="thumb" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI#readme" target="_blank" rel="noopener" aria-label="Open project website / README">
+          Preview
+        </a>
+        <header>
+          <div class="row">
+            <a class="pill" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI#readme" target="_blank" rel="noopener">Python</a>
+          </div>
+          <div class="row">
+            <span class="stack">Algorithms • UI</span>
+            <a class="icon-btn" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI" target="_blank" rel="noopener" aria-label="View source on GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
+            </a>
+          </div>
+        </header>
+        <h3>booksortingUI</h3>
+        <p>Data-structures & sorting algorithm visualizer built in Python — handy for demos and teaching.</p>
+      </article>
+    </div>
+
+    <p class="caveat">More on GitHub → <a href="https://github.com/KarthikeyanBhavaniShankar?tab=repositories" target="_blank" rel="noopener">repositories</a></p>
+  </div>
+</section>
 
     <!-- Skills -->
     <section id="skills" class="section">
