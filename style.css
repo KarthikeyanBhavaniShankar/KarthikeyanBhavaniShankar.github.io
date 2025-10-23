@@ -140,3 +140,27 @@ input:focus, textarea:focus{outline:2px solid var(--brand);border-color:transpar
   .hero-card{min-height:180px;margin-top:12px}
   .contact{grid-template-columns:1fr}
 }
+
+/* Project thumbnail + GitHub icon button */
+.project-card .thumb{
+  aspect-ratio:16/10;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background: radial-gradient(60% 60% at 40% 0%, #7aa2ff22, transparent 70%), linear-gradient(180deg,#1a1f2d,#151927);
+  display:grid;place-items:center;
+  color:#dfe6ff;font-weight:700;text-decoration:none;
+  transition:transform .2s ease, box-shadow .2s ease;
+  user-select:none;
+}
+.project-card .thumb:hover{ transform:translateY(-1px); box-shadow:0 10px 30px rgba(0,0,0,.25) }
+
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--card);
+  transition:transform .15s ease, border-color .2s ease, background .2s ease;
+  text-decoration:none;color:var(--text);
+}
+.icon-btn:hover{ transform:translateY(-1px); border-color:var(--brand) }
+.icon-btn svg{ width:20px;height:20px;fill:currentColor }
+
