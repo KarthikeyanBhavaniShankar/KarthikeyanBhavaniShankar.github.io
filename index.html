@@ -1,226 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Karthikeyan Bhavani Shankar — Portfolio</title>
-  <meta name="description" content="Embedded systems, ROS 2 robotics, sensor fusion, and autonomous technology." />
-  <meta property="og:title" content="Karthikeyan Bhavani Shankar — Portfolio" />
-  <meta property="og:description" content="Hardware–software integration, embedded systems, ROS 2, and autonomy." />
-  <meta property="og:type" content="website" />
-  <meta name="color-scheme" content="light dark" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Karthikeyan Bhavani Shankar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0a0a;--paper:#f5f2ec;--paper2:#ede9e1;--wire:#ddd8cf;
+  --volt:#00e5a0;--volt-dim:rgba(0,229,160,0.1);--volt-glow:rgba(0,229,160,0.28);
+  --muted:#6b6560;
+  --serif:'DM Serif Display',Georgia,serif;
+  --display:'Bebas Neue',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --body:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);overflow-x:hidden;cursor:none}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--volt);color:var(--ink)}
+
+/* Grain */
+body::before{
+  content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.025;
+}
+
+/* Cursor */
+#cur{position:fixed;width:9px;height:9px;background:var(--volt);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;}
+#cur-ring{position:fixed;width:34px;height:34px;border:1.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s,height .18s,border-color .18s;}
+
+/* Header */
+header{position:fixed;top:0;left:0;right:0;z-index:500;height:54px;display:flex;align-items:center;border-bottom:1px solid var(--wire);background:rgba(245,242,236,0.88);backdrop-filter:blur(18px);}
+.nav-inner{width:100%;max-width:1400px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:10px;}
+.nav-logo::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 12px var(--volt-glow);flex-shrink:0;animation:vpulse 2s ease-in-out infinite;}
+@keyframes vpulse{0%,100%{box-shadow:0 0 8px var(--volt-glow)}50%{box-shadow:0 0 22px var(--volt-glow),0 0 42px rgba(0,229,160,.12)}}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--volt);transition:width .25s ease;}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{font-family:var(--mono)!important;font-size:.68rem!important;font-weight:700!important;padding:7px 16px!important;border:1.5px solid var(--ink)!important;transition:background .2s,color .2s!important;}
+.nav-cta:hover{background:var(--ink)!important;color:var(--paper)!important;}
+.nav-cta::after{display:none!important;}
+
+/* HERO */
+.hero{min-height:100vh;padding:110px 40px 60px;max-width:1400px;margin:0 auto;display:grid;grid-template-rows:auto 1fr auto;position:relative;}
+#hero-canvas{position:fixed;right:0;top:0;width:45vw;height:100vh;pointer-events:none;opacity:.5;z-index:0;}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;position:relative;z-index:1;}
+.hero-eyebrow em{color:var(--volt);font-style:normal;}
+.hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--volt);flex-shrink:0;}
+.hero-title{font-family:var(--display);font-size:clamp(5.5rem,11vw,13rem);line-height:.9;letter-spacing:.005em;color:var(--ink);position:relative;z-index:1;}
+.hero-title .outline{color:transparent;-webkit-text-stroke:1.5px var(--ink);}
+.hero-title .volt{color:var(--volt);-webkit-text-stroke:0;}
+.hero-mid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:end;margin-top:44px;padding-bottom:40px;border-bottom:1px solid var(--wire);position:relative;z-index:1;}
+.hero-desc{max-width:50ch;font-size:1.1rem;line-height:1.78;color:var(--muted);font-weight:300;}
+.hero-desc strong{color:var(--ink);font-weight:500;}
+.hero-ctas{display:flex;gap:10px;margin-top:24px;}
+.btn-blk{display:inline-block;padding:12px 26px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .2s,color .2s;}
+.btn-blk:hover{background:var(--volt);color:var(--ink);}
+.btn-out{display:inline-block;padding:12px 26px;border:1.5px solid var(--wire);color:var(--muted);font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:border-color .2s,color .2s;}
+.btn-out:hover{border-color:var(--ink);color:var(--ink);}
+.stat-cluster{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--wire);}
+.stat-box{background:var(--paper);padding:20px;}
+.stat-num{font-family:var(--display);font-size:2.6rem;line-height:1;color:var(--ink);}
+.stat-lbl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:4px;}
+.stat-box.dark{grid-column:1/-1;background:var(--ink);}
+.stat-box.dark .stat-num{color:var(--volt);font-size:1rem;font-family:var(--mono);line-height:1.5;}
+.stat-box.dark .stat-lbl{color:rgba(245,242,236,.35);}
+.hero-foot{display:flex;align-items:center;justify-content:space-between;padding-top:28px;position:relative;z-index:1;}
+.badges{display:flex;flex-wrap:wrap;gap:7px;list-style:none;}
+.badge{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;padding:5px 11px;border:1px solid var(--wire);color:var(--muted);transition:border-color .2s,color .2s,background .2s;}
+.badge:hover{border-color:var(--volt);color:var(--ink);background:var(--volt-dim);}
+.scroll-hint{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);display:flex;align-items:center;gap:8px;animation:shint 2s ease-in-out infinite;}
+@keyframes shint{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.scroll-hint::after{content:'↓';}
+
+/* MARQUEE */
+.marquee-strip{overflow:hidden;border-top:1px solid var(--wire);border-bottom:1px solid var(--wire);background:var(--ink);padding:13px 0;}
+.marquee-track{display:flex;gap:44px;animation:mq 20s linear infinite;width:max-content;}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-item{font-family:var(--display);font-size:1.3rem;letter-spacing:.06em;color:rgba(245,242,236,.35);white-space:nowrap;flex-shrink:0;}
+.mq-item.h{color:var(--volt);opacity:1;}
+
+/* Sections */
+.section{max-width:1400px;margin:0 auto;padding:90px 40px;}
+.sec-label{font-family:var(--mono);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:44px;display:flex;align-items:center;gap:14px;}
+.sec-label::before{content:attr(data-n);color:var(--volt);}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--wire);}
+.sec-h{font-family:var(--display);font-size:clamp(3rem,5.5vw,6rem);line-height:.95;margin-bottom:52px;}
+
+/* PROJECTS */
+.proj-list{border-top:1px solid var(--wire);}
+.proj-row{display:grid;grid-template-columns:72px 1fr 260px;border-bottom:1px solid var(--wire);transition:background .2s;cursor:none;}
+.proj-row:hover{background:var(--ink);}
+.proj-row:hover .proj-num,.proj-row:hover .proj-title,.proj-row:hover .proj-desc,.proj-row:hover .st{color:var(--paper);}
+.proj-row:hover .proj-arrow{color:var(--volt);transform:translate(4px,-4px);}
+.pn{font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--volt);padding:30px 16px;display:flex;align-items:flex-start;justify-content:center;border-right:1px solid var(--wire);transition:border-color .2s;}
+.proj-row:hover .pn{border-color:rgba(245,242,236,.08);}
+.pm{padding:30px 36px;border-right:1px solid var(--wire);transition:border-color .2s;}
+.proj-row:hover .pm{border-color:rgba(245,242,236,.08);}
+.pt-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.proj-title{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--ink);transition:color .2s;}
+.ptag{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--volt);color:var(--volt);background:var(--volt-dim);}
+.proj-desc{font-size:.9rem;color:var(--muted);line-height:1.65;max-width:54ch;font-weight:300;transition:color .2s;}
+.ps{padding:30px 24px;display:flex;flex-direction:column;justify-content:space-between;}
+.stack{display:flex;flex-wrap:wrap;gap:5px;}
+.st{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.05em;transition:color .2s;}
+.st+.st::before{content:'/ ';}
+.proj-arrow{font-size:1.5rem;color:var(--muted);align-self:flex-end;transition:color .2s,transform .25s ease;}
+
+/* SKILLS */
+.skills-top{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--wire);margin-bottom:2px;}
+.sk-feat{padding:44px;border-right:1px solid var(--wire);display:flex;flex-direction:column;justify-content:space-between;}
+.sk-feat-title{font-family:var(--display);font-size:2.6rem;letter-spacing:.02em;margin-bottom:14px;}
+.sk-feat-desc{font-size:.92rem;color:var(--muted);line-height:1.7;font-weight:300;}
+.sk-bar{display:flex;gap:3px;margin-top:20px;}
+.bseg{height:3px;flex:1;background:var(--wire);transition:background .3s;}
+.bseg.on{background:var(--volt);}
+.sk-rows{display:flex;flex-direction:column;}
+.sk-row{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--wire);padding:16px 28px;transition:background .2s;}
+.sk-row:last-child{border-bottom:none;}
+.sk-row:hover{background:var(--volt-dim);}
+.sk-ico{font-size:1rem;margin-right:12px;flex-shrink:0;}
+.sk-name{font-family:var(--mono);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex:1;}
+.sk-items{font-size:.78rem;color:var(--muted);font-weight:300;text-align:right;}
+.skills-bot{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--wire);border-top:none;}
+.sc{padding:26px;border-right:1px solid var(--wire);transition:background .2s;}
+.sc:last-child{border-right:none;}
+.sc:hover{background:var(--ink);}
+.sc:hover .sc-t{color:var(--volt);}
+.sc:hover .sc-b{color:rgba(245,242,236,.55);}
+.sc-t{font-family:var(--mono);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:9px;transition:color .2s;}
+.sc-b{font-size:.8rem;color:var(--muted);line-height:1.6;font-weight:300;transition:color .2s;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--wire);}
+.stats-row a{display:block;padding:3px;border-right:1px solid var(--wire);transition:background .2s;}
+.stats-row a:last-child{border-right:none;}
+.stats-row a:hover{background:var(--volt-dim);}
+.stats-row img{width:100%;height:auto;display:block;}
+
+/* TOOLS */
+.tools-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:1px;background:var(--wire);border:1px solid var(--wire);}
+.tcell{background:var(--paper);padding:22px 10px;display:flex;flex-direction:column;align-items:center;gap:7px;transition:background .2s;cursor:none;}
+.tcell:hover{background:var(--ink);}
+.tcell img{width:30px;height:30px;transition:filter .2s;}
+.tcell:hover img{filter:brightness(10) saturate(0);}
+.tcell span{font-family:var(--mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);text-align:center;transition:color .2s;}
+.tcell:hover span{color:rgba(245,242,236,.45);}
+
+/* CHAT */
+.chat-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--wire);}
+.chat-l{padding:52px;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;}
+.chat-l-title{font-family:var(--display);font-size:3.2rem;color:var(--paper);line-height:.95;margin-bottom:18px;}
+.chat-l-title span{color:var(--volt);}
+.chat-l-desc{font-size:.88rem;color:rgba(245,242,236,.45);line-height:1.78;font-weight:300;margin-bottom:36px;}
+.chat-suggs{display:flex;flex-direction:column;gap:7px;}
+.sugg{font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;padding:11px 14px;border:1px solid rgba(245,242,236,.1);background:transparent;color:rgba(245,242,236,.45);text-align:left;cursor:none;transition:border-color .2s,color .2s,background .2s;}
+.sugg:hover{border-color:var(--volt);color:var(--volt);background:rgba(0,229,160,.05);}
+.sugg::before{content:'↗ ';opacity:.5;}
+.chat-r{display:flex;flex-direction:column;background:var(--paper2);}
+.chat-bar{padding:14px 22px;border-bottom:1px solid var(--wire);display:flex;align-items:center;gap:10px;background:var(--paper);}
+.cdot{width:7px;height:7px;border-radius:50%;background:var(--volt);animation:vpulse 2s ease-in-out infinite;}
+.chat-bar-lbl{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+.chat-bar-model{margin-left:auto;font-family:var(--mono);font-size:.62rem;color:var(--wire);}
+.msgs{flex:1;padding:22px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;min-height:300px;max-height:360px;scroll-behavior:smooth;}
+.msgs::-webkit-scrollbar{width:3px;}
+.msgs::-webkit-scrollbar-thumb{background:var(--wire);}
+.msg{display:flex;flex-direction:column;gap:3px;}
+.msg-role{font-family:var(--mono);font-size:.57rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);}
+.msg.user .msg-role{text-align:right;color:var(--volt);}
+.msg-body{padding:11px 14px;font-size:.86rem;line-height:1.65;font-weight:300;border:1px solid var(--wire);background:var(--paper);max-width:90%;}
+.msg.user .msg-body{align-self:flex-end;background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.msg.claude .msg-body code{font-family:var(--mono);font-size:.78rem;background:var(--volt-dim);color:var(--ink);padding:1px 5px;border:1px solid rgba(0,229,160,.25);}
+.tdots{display:flex;gap:5px;padding:4px 2px;}
+.tdots span{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:td 1.2s ease-in-out infinite;}
+.tdots span:nth-child(2){animation-delay:.2s;}
+.tdots span:nth-child(3){animation-delay:.4s;}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-5px);opacity:1}}
+.chat-inp-row{display:flex;border-top:1px solid var(--wire);}
+#chatInput{flex:1;padding:15px 18px;background:var(--paper);border:none;border-right:1px solid var(--wire);font-family:var(--body);font-size:.86rem;color:var(--ink);outline:none;font-weight:300;}
+#chatInput::placeholder{color:var(--muted);}
+#chatInput:focus{background:#fff;}
+#chatSend{padding:15px 22px;background:var(--ink);color:var(--volt);border:none;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:none;transition:background .2s;}
+#chatSend:hover{background:var(--volt);color:var(--ink);}
+#chatSend:disabled{opacity:.4;cursor:not-allowed;}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--wire);}
+.c-left{padding:52px;background:var(--ink);border-right:1px solid var(--wire);}
+.c-left h3{font-family:var(--display);font-size:2.8rem;color:var(--paper);line-height:.95;margin-bottom:6px;}
+.c-left h3 span{color:var(--volt);}
+.c-left p{font-size:.88rem;color:rgba(245,242,236,.42);margin-bottom:32px;font-weight:300;line-height:1.75;}
+.c-form{display:flex;flex-direction:column;gap:11px;}
+.cf{display:flex;flex-direction:column;gap:5px;}
+.cf label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(245,242,236,.32);}
+.cf input,.cf textarea{background:rgba(245,242,236,.04);border:1px solid rgba(245,242,236,.1);color:var(--paper);padding:11px 13px;font-family:var(--body);font-size:.86rem;outline:none;resize:vertical;font-weight:300;transition:border-color .2s,background .2s;}
+.cf input:focus,.cf textarea:focus{border-color:var(--volt);background:rgba(0,229,160,.04);}
+.cf input::placeholder,.cf textarea::placeholder{color:rgba(245,242,236,.18);}
+.c-submit{margin-top:4px;padding:13px;background:var(--volt);color:var(--ink);border:none;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:opacity .2s;}
+.c-submit:hover{opacity:.85;}
+.c-right{padding:52px;display:flex;flex-direction:column;}
+.c-right h4{font-family:var(--mono);font-size:.63rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:22px;}
+.clink{display:flex;align-items:center;padding:18px 0;border-bottom:1px solid var(--wire);gap:14px;transition:padding-left .2s;color:var(--ink);}
+.clink:hover{padding-left:8px;}
+.clink-ico{font-size:1.3rem;flex-shrink:0;}
+.clink-body strong{display:block;font-size:.92rem;font-weight:500;margin-bottom:2px;}
+.clink-body span{font-size:.78rem;color:var(--muted);font-family:var(--mono);}
+.clink-arrow{margin-left:auto;font-size:1.1rem;color:var(--muted);transition:color .2s,transform .2s;}
+.clink:hover .clink-arrow{color:var(--volt);transform:translateX(4px);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--wire);padding:22px 40px;display:flex;align-items:center;justify-content:space-between;background:var(--paper);}
+.fl{font-family:var(--mono);font-size:.63rem;letter-spacing:.07em;color:var(--muted);}
+.fr{font-family:var(--mono);font-size:.63rem;color:var(--muted);display:flex;gap:22px;}
+.fr a:hover{color:var(--volt);}
+
+/* Scroll reveal */
+.sr{opacity:0;transform:translateY(36px);transition:opacity .65s ease,transform .65s ease;}
+.sr.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+
+@media(max-width:1100px){
+  .hero-title{font-size:clamp(4rem,9vw,9rem);}
+  .hero-mid{grid-template-columns:1fr;}
+  #hero-canvas{width:100vw;opacity:.25;}
+  .skills-top{grid-template-columns:1fr;}
+  .skills-bot{grid-template-columns:1fr 1fr;}
+  .chat-wrap{grid-template-columns:1fr;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr;}
+  .proj-row{grid-template-columns:60px 1fr;}
+  .ps{display:none;}
+}
+@media(max-width:680px){
+  .hero,.section{padding-left:20px;padding-right:20px;}
+  .skills-bot{grid-template-columns:1fr;}
+  .nav-inner{padding:0 20px;}
+  footer{flex-direction:column;gap:10px;text-align:center;}
+}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#content">Skip to content</a>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container">
-      <nav class="nav" aria-label="Primary">
-        <div class="brand">
-          <span class="dot" aria-hidden="true"></span>
-          <a href="#home"><strong>KB Shankar</strong></a>
-        </div>
-        <div class="row">
-          <a class="btn text" href="#projects">Projects</a>
-          <a class="btn text" href="#skills">Skills</a>
-          <a class="btn text" href="#tools">Tools</a>
-          <a class="btn text" href="#contact">Contact</a>
-          <button id="themeToggle" class="btn outline" type="button" aria-label="Toggle theme" aria-pressed="false">☀︎ / ☾</button>
-        </div>
-      </nav>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<canvas id="hero-canvas"></canvas>
+
+<header>
+  <div class="nav-inner">
+    <div class="nav-logo">KB Shankar</div>
+    <nav class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#claude-ai">Ask Claude</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow"><em>01</em> — Carleton University · Computer Systems Engineering · Co-op</div>
+  <div style="position:relative;z-index:1">
+    <h1 class="hero-title">EMBEDDED<br><span class="outline">SYSTEMS</span><br><span class="volt">ENGINEER</span></h1>
+  </div>
+  <div class="hero-mid">
+    <div>
+      <p class="hero-desc">I build <strong>autonomous machines</strong> that see, decide, and navigate. GNSS + IMU sensor fusion on <strong>NVIDIA Jetson AGX Orin</strong> running ROS 2 Humble with an Extended Kalman Filter — achieving <strong>~80% positional drift reduction</strong> in outdoor field tests.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-blk">View Work →</a>
+        <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" class="btn-out">GitHub</a>
+        <a href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" class="btn-out">LinkedIn</a>
+      </div>
     </div>
-  </header>
+    <div class="stat-cluster">
+      <div class="stat-box"><div class="stat-num">80<span style="font-size:1.4rem">%</span></div><div class="stat-lbl">Drift reduction</div></div>
+      <div class="stat-box"><div class="stat-num">EKF</div><div class="stat-lbl">100Hz update rate</div></div>
+      <div class="stat-box dark"><div class="stat-num">ROS 2 · Nav2 · Jetson AGX Orin</div><div class="stat-lbl">Capstone autonomy stack</div></div>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <ul class="badges"><li class="badge">Embedded C/C++</li><li class="badge">ROS 2 Humble</li><li class="badge">Sensor Fusion</li><li class="badge">FPGA Design</li><li class="badge">TensorFlow</li><li class="badge">Nav2</li><li class="badge">u-blox ZED-F9R</li></ul>
+    <div class="scroll-hint">Scroll to explore</div>
+  </div>
+</section>
 
-  <main id="content">
-    <!-- Hero -->
-    <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div>
-          <p class="eyebrow">4th-year Computer Systems Engineering @ Carleton (Co-op)</p>
-          <h1>Hi, I'm <span class="accent">Karthikeyan Bhavani Shankar</span>.</h1>
-          <p class="lede">
-            I build intelligent embedded systems that merge <strong>hardware control</strong>, <strong>real-time software</strong>,
-            and <strong>machine learning</strong>. Recently: GNSS + IMU localization & navigation on
-            <strong>Jetson AGX Orin</strong> with <strong>ROS 2 Humble</strong> and an <strong>EKF</strong> — reducing positional drift by ~80%.
-          </p>
-          <div class="cta-row">
-            <a class="btn solid" href="#projects">View Projects →</a>
-            <a class="btn ghost" href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noopener">GitHub</a>
-            <a class="btn ghost" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-          <ul class="badges">
-            <li>Embedded Systems</li>
-            <li>ROS 2</li>
-            <li>Sensor Fusion (EKF)</li>
-            <li>Autonomy & Control</li>
-            <li>Jetson AGX Orin</li>
-          </ul>
-        </div>
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="mq-item">GNSS FUSION</span><span class="mq-item h">★</span>
+    <span class="mq-item">ROS 2 HUMBLE</span><span class="mq-item h">★</span>
+    <span class="mq-item">EXTENDED KALMAN FILTER</span><span class="mq-item h">★</span>
+    <span class="mq-item">JETSON AGX ORIN</span><span class="mq-item h">★</span>
+    <span class="mq-item">EMBEDDED C++</span><span class="mq-item h">★</span>
+    <span class="mq-item">FPGA DESIGN</span><span class="mq-item h">★</span>
+    <span class="mq-item">NAV2 STACK</span><span class="mq-item h">★</span>
+    <span class="mq-item">AUTONOMY</span><span class="mq-item h">★</span>
+    <span class="mq-item">GNSS FUSION</span><span class="mq-item h">★</span>
+    <span class="mq-item">ROS 2 HUMBLE</span><span class="mq-item h">★</span>
+    <span class="mq-item">EXTENDED KALMAN FILTER</span><span class="mq-item h">★</span>
+    <span class="mq-item">JETSON AGX ORIN</span><span class="mq-item h">★</span>
+    <span class="mq-item">EMBEDDED C++</span><span class="mq-item h">★</span>
+    <span class="mq-item">FPGA DESIGN</span><span class="mq-item h">★</span>
+  </div>
+</div>
 
-        <!-- Decorative / quick stats -->
-        <div class="hero-card" aria-hidden="true">
-          <div class="card chip">
-            <div class="chip-core"></div>
-            <div class="chip-lines"></div>
-          </div>
-          <div class="card stat">
-            <div class="stat-num">80%</div>
-            <div class="stat-label">Drift reduction</div>
-          </div>
-          <div class="card stat">
-            <div class="stat-num">ROS 2</div>
-            <div class="stat-label">Humble • Nav2</div>
-          </div>
-          <div class="hero-bg"></div>
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="sec-label" data-n="02">Selected Projects</div>
+  <h2 class="sec-h sr">WORK</h2>
+  <div class="proj-list">
+    <a href="https://github.com/Carleton-AAV-Capstone/GNSS" target="_blank" class="proj-row sr">
+      <div class="pn">01</div>
+      <div class="pm">
+        <div class="pt-row"><h3 class="proj-title">Autonomous Navigation System</h3><span class="ptag">Capstone</span></div>
+        <p class="proj-desc">GNSS + IMU fusion on NVIDIA Jetson AGX Orin via ROS 2 Humble and EKF. Reduced positional drift ~80% in real outdoor autonomous field tests. Full Nav2 stack with RViz2 visualization and custom waypoint following.</p>
+      </div>
+      <div class="ps"><div class="stack"><span class="st">C++</span><span class="st">ROS 2</span><span class="st">EKF</span><span class="st">Nav2</span><span class="st">u-blox</span></div><div class="proj-arrow">↗</div></div>
+    </a>
+    <a href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI" target="_blank" class="proj-row sr d1">
+      <div class="pn">02</div>
+      <div class="pm">
+        <div class="pt-row"><h3 class="proj-title">ElevatorSystemGUI</h3><span class="ptag">JavaFX</span></div>
+        <p class="proj-desc">Multi-threaded elevator scheduling simulator with a real-time JavaFX interface. Models concurrent floors and cars, visualizing throughput and wait-time metrics across scheduling algorithms.</p>
+      </div>
+      <div class="ps"><div class="stack"><span class="st">Java</span><span class="st">JavaFX</span><span class="st">Concurrency</span></div><div class="proj-arrow">↗</div></div>
+    </a>
+    <a href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI" target="_blank" class="proj-row sr d2">
+      <div class="pn">03</div>
+      <div class="pm">
+        <div class="pt-row"><h3 class="proj-title">booksortingUI</h3><span class="ptag">Python</span></div>
+        <p class="proj-desc">Data-structures & algorithm visualizer. Step-by-step animated rendering of Quicksort, Merge Sort, Bubble Sort and more — designed for live classroom teaching and demos.</p>
+      </div>
+      <div class="ps"><div class="stack"><span class="st">Python</span><span class="st">Pygame</span><span class="st">DSA</span></div><div class="proj-arrow">↗</div></div>
+    </a>
+  </div>
+  <p style="margin-top:22px;font-family:var(--mono);font-size:.68rem;letter-spacing:.07em;color:var(--muted)">More at <a href="https://github.com/KarthikeyanBhavaniShankar?tab=repositories" target="_blank" style="color:var(--ink);border-bottom:1px solid var(--ink)">github.com/KarthikeyanBhavaniShankar</a></p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section" style="padding-top:0">
+  <div class="sec-label" data-n="03">Expertise</div>
+  <h2 class="sec-h sr">SKILLS</h2>
+  <div class="skills-top sr">
+    <div class="sk-feat">
+      <div>
+        <div class="sk-feat-title">Embedded Systems<br>& Robotics</div>
+        <p class="sk-feat-desc">Hardware-software co-design, real-time control loops, sensor fusion pipelines, and autonomous navigation stacks — from VHDL on FPGAs to ROS 2 nodes on ARM SBCs.</p>
+      </div>
+      <div class="sk-bar"><div class="bseg on"></div><div class="bseg on"></div><div class="bseg on"></div><div class="bseg on"></div><div class="bseg on"></div><div class="bseg"></div></div>
+    </div>
+    <div class="sk-rows">
+      <div class="sk-row"><span class="sk-ico">⚡</span><span class="sk-name">Languages</span><span class="sk-items">C/C++, Python, Java, JS, VHDL, Verilog, Go, SQL</span></div>
+      <div class="sk-row"><span class="sk-ico">🤖</span><span class="sk-name">Robotics</span><span class="sk-items">ROS 2, Nav2, RViz2, EKF, Sensor Fusion</span></div>
+      <div class="sk-row"><span class="sk-ico">🔧</span><span class="sk-name">Hardware</span><span class="sk-items">Jetson AGX Orin, u-blox, IMU, ToF, FPGA</span></div>
+      <div class="sk-row"><span class="sk-ico">🧠</span><span class="sk-name">ML / AI</span><span class="sk-items">TensorFlow, Keras, pandas, NumPy</span></div>
+      <div class="sk-row"><span class="sk-ico">☁️</span><span class="sk-name">Cloud</span><span class="sk-items">AWS, GCP, Jenkins, Linux administration</span></div>
+    </div>
+  </div>
+  <div class="skills-bot sr d1">
+    <div class="sc"><div class="sc-t">Web & Backend</div><div class="sc-b">Flask, React, Node.js, Django, PostgreSQL, SQLite</div></div>
+    <div class="sc"><div class="sc-t">Dev Tools</div><div class="sc-b">VS Code, IntelliJ, PyCharm, Git, GitHub, Linux monitoring</div></div>
+    <div class="sc"><div class="sc-t">Data</div><div class="sc-b">pandas, NumPy, Matplotlib, data pipelines, visualization</div></div>
+    <div class="sc"><div class="sc-t">Core</div><div class="sc-b">Control systems, digital design, localization, autonomy</div></div>
+  </div>
+</section>
+
+<!-- GITHUB -->
+<section class="section" style="padding-top:0">
+  <div class="sec-label" data-n="04">Activity</div>
+  <h2 class="sec-h sr">GITHUB</h2>
+  <div class="stats-row sr">
+    <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank"><img src="https://github-readme-stats.vercel.app/api?username=KarthikeyanBhavaniShankar&show_icons=true&hide_border=true&bg_color=f5f2ec&title_color=0a0a0a&text_color=6b6560&icon_color=00e5a0" alt="GitHub stats" loading="lazy"/></a>
+    <a href="https://github.com/KarthikeyanBhavaniShankar?tab=repositories" target="_blank"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=KarthikeyanBhavaniShankar&layout=compact&hide_border=true&bg_color=f5f2ec&title_color=0a0a0a&text_color=6b6560" alt="Top languages" loading="lazy"/></a>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="section" style="padding-top:0">
+  <div class="sec-label" data-n="05">Stack</div>
+  <h2 class="sec-h sr">TOOLS</h2>
+  <div class="tools-g sr">
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C"/><span>C</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"/><span>C++</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"/><span>Python</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"/><span>Java</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS"/><span>JS</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TF"/><span>TensorFlow</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"/><span>React</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"/><span>Flask</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"/><span>Django</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PG"/><span>PostgreSQL</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"/><span>Linux</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/><span>Git</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS"/><span>AWS</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP"/><span>GCP</span></div>
+    <div class="tcell"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VSCode"/><span>VS Code</span></div>
+  </div>
+</section>
+
+<!-- CLAUDE AI -->
+<section id="claude-ai" class="section" style="padding-top:0">
+  <div class="sec-label" data-n="06">AI-Powered</div>
+  <h2 class="sec-h sr">ASK CLAUDE</h2>
+  <div class="chat-wrap sr">
+    <div class="chat-l">
+      <div>
+        <h3 class="chat-l-title">Have a<br><span>question?</span></h3>
+        <p class="chat-l-desc">Claude knows this portfolio inside-out — projects, skills, hardware stack, and availability. Ask anything about Karthikeyan's work.</p>
+      </div>
+      <div class="chat-suggs">
+        <button class="sugg" onclick="sendSugg(this)">What's the capstone project?</button>
+        <button class="sugg" onclick="sendSugg(this)">Explain the EKF implementation</button>
+        <button class="sugg" onclick="sendSugg(this)">What languages does he know?</button>
+        <button class="sugg" onclick="sendSugg(this)">Is he open to internships?</button>
+        <button class="sugg" onclick="sendSugg(this)">Tell me about the hardware stack</button>
+      </div>
+    </div>
+    <div class="chat-r">
+      <div class="chat-bar">
+        <div class="cdot"></div>
+        <span class="chat-bar-lbl">Portfolio Assistant · Online</span>
+        <span class="chat-bar-model">claude-sonnet-4</span>
+      </div>
+      <div class="msgs" id="msgs">
+        <div class="msg claude">
+          <div class="msg-role">Claude</div>
+          <div class="msg-body">Hello — I know Karthikeyan's work in depth. Ask me about his autonomous navigation capstone, embedded systems skills, the hardware stack, or anything else.</div>
         </div>
       </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Selected Projects</h2>
-          <div class="filters" role="tablist" aria-label="Filter projects">
-            <button class="chip-tab active" role="tab" data-filter="all" aria-selected="true">All</button>
-            <button class="chip-tab" role="tab" data-filter="ros2">ROS 2</button>
-            <button class="chip-tab" role="tab" data-filter="java">Java</button>
-            <button class="chip-tab" role="tab" data-filter="python">Python</button>
-          </div>
-        </div>
-
-        <div class="cards">
-          <!-- Project 1 -->
-          <article class="project-card" data-tags="ros2,ekf,jetson,localization">
-            <a class="thumb" href="https://github.com/Carleton-AAV-Capstone/GNSS#readme" target="_blank" rel="noopener">Preview</a>
-            <header>
-              <div class="row">
-                <a class="pill" href="https://github.com/Carleton-AAV-Capstone/GNSS#readme" target="_blank" rel="noopener">Capstone</a>
-              </div>
-              <div class="row">
-                <span class="stack">ROS 2 • EKF • Jetson</span>
-                <a class="icon-btn" href="https://github.com/Carleton-AAV-Capstone/GNSS" target="_blank" rel="noopener" aria-label="View source on GitHub">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
-                </a>
-              </div>
-            </header>
-            <h3>Autonomous Navigation System</h3>
-            <p>GNSS + IMU fusion on NVIDIA Jetson AGX Orin using ROS 2 Humble and an Extended Kalman Filter, reducing positional drift ~80% in outdoor tests.</p>
-          </article>
-
-          <!-- Project 2 -->
-          <article class="project-card" data-tags="java,simulation,gui">
-            <a class="thumb" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI#readme" target="_blank" rel="noopener">Preview</a>
-            <header>
-              <div class="row">
-                <a class="pill" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI#readme" target="_blank" rel="noopener">JavaFX</a>
-              </div>
-              <div class="row">
-                <span class="stack">Concurrency • UI</span>
-                <a class="icon-btn" href="https://github.com/KarthikeyanBhavaniShankar/ElevatorSystemGUI" target="_blank" rel="noopener" aria-label="View source on GitHub">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
-                </a>
-              </div>
-            </header>
-            <h3>ElevatorSystemGUI</h3>
-            <p>Multi-threaded Java elevator scheduling simulator with a JavaFX interface and throughput / wait-time metrics.</p>
-          </article>
-
-          <!-- Project 3 -->
-          <article class="project-card" data-tags="python,visualization,education">
-            <a class="thumb" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI#readme" target="_blank" rel="noopener">Preview</a>
-            <header>
-              <div class="row">
-                <a class="pill" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI#readme" target="_blank" rel="noopener">Python</a>
-              </div>
-              <div class="row">
-                <span class="stack">Algorithms • UI</span>
-                <a class="icon-btn" href="https://github.com/KarthikeyanBhavaniShankar/booksortingUI" target="_blank" rel="noopener" aria-label="View source on GitHub">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.33-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
-                </a>
-              </div>
-            </header>
-            <h3>booksortingUI</h3>
-            <p>Data-structures & sorting algorithm visualizer built in Python — handy for demos and teaching.</p>
-          </article>
-        </div>
-
-        <p class="caveat">More on GitHub → <a href="https://github.com/KarthikeyanBhavaniShankar?tab=repositories" target="_blank" rel="noopener">repositories</a></p>
+      <div class="chat-inp-row">
+        <input type="text" id="chatInput" placeholder="Type your question…" maxlength="300"/>
+        <button id="chatSend" onclick="sendMsg()">Send →</button>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Skills -->
-    <section id="skills" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Skills</h2>
-          <span class="stack">Hardware–software integration • Robotics • Data-driven engineering</span>
-        </div>
-        <div class="skills-grid">
-          <div class="skill">
-            <span>Programming Languages</span>
-            <p>C / C++, Python, Java, JavaScript, SQL, VHDL, Verilog, Go</p>
-          </div>
-          <div class="skill">
-            <span>Frameworks & Libraries</span>
-            <p>ROS 2 (Nav2, RViz2), TensorFlow, Keras, Flask, React, Node.js, Django, Pygame, JavaFX</p>
-          </div>
-          <div class="skill">
-            <span>Cloud / DevOps</span>
-            <p>AWS • GCP • Jenkins • SSH Tunneling • Ubuntu Linux Administration</p>
-          </div>
-          <div class="skill">
-            <span>Data & Visualization</span>
-            <p>pandas • NumPy • Matplotlib • PostgreSQL • SQLite</p>
-          </div>
-          <div class="skill">
-            <span>Hardware & Embedded</span>
-            <p>Jetson AGX Orin • u-blox ZED-F9R GNSS • IMUs • VL53L1X ToF • FPGA Design</p>
-          </div>
-          <div class="skill">
-            <span>Developer Tools</span>
-            <p>IntelliJ IDEA • VS Code • PyCharm • Eclipse • Git/GitHub • Linux Monitoring Tools</p>
-          </div>
-          <div class="skill">
-            <span>Core Competencies</span>
-            <p>Sensor Fusion • Localization • Control Systems • Digital Design • Embedded Architecture • ML Integration</p>
-          </div>
-        </div>
+<!-- CONTACT -->
+<section id="contact" class="section" style="padding-top:0">
+  <div class="sec-label" data-n="07">Reach Out</div>
+  <h2 class="sec-h sr">LET'S TALK</h2>
+  <div class="contact-wrap sr">
+    <div class="c-left">
+      <div>
+        <h3>Get in<br><span>touch.</span></h3>
+        <p>Open to co-op placements and full-time roles in embedded systems, robotics, and autonomous technology. Based in Ottawa, Ontario.</p>
       </div>
-    </section>
-
-    <!-- GitHub Stats -->
-    <section id="stats" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>GitHub Stats</h2>
-          <span class="stack">Auto-updated via github-readme-stats</span>
-        </div>
-        <div class="stats-cards">
-          <a class="card" href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noopener">
-            <img src="https://github-readme-stats.vercel.app/api?username=KarthikeyanBhavaniShankar&show_icons=true&theme=radical" alt="GitHub stats"/>
-          </a>
-          <a class="card" href="https://github.com/KarthikeyanBhavaniShankar?tab=repositories" target="_blank" rel="noopener">
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=KarthikeyanBhavaniShankar&layout=compact&theme=radical" alt="Top languages"/>
-          </a>
-        </div>
+      <div class="c-form">
+        <div class="cf"><label>Name</label><input type="text" placeholder="Your name"/></div>
+        <div class="cf"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="cf"><label>Message</label><textarea rows="4" placeholder="Tell me about the opportunity…"></textarea></div>
+        <button class="c-submit">Send Message →</button>
       </div>
-    </section>
+    </div>
+    <div class="c-right">
+      <h4>Find me online</h4>
+      <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" class="clink">
+        <span class="clink-ico">🐙</span><div class="clink-body"><strong>GitHub</strong><span>KarthikeyanBhavaniShankar</span></div><span class="clink-arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" class="clink">
+        <span class="clink-ico">💼</span><div class="clink-body"><strong>LinkedIn</strong><span>karthikeyan-bhavani-shankar</span></div><span class="clink-arrow">→</span>
+      </a>
+      <div class="clink">
+        <span class="clink-ico">🎓</span><div class="clink-body"><strong>Carleton University</strong><span>Computer Systems Engineering, 4th Year</span></div>
+      </div>
+      <div class="clink">
+        <span class="clink-ico">📍</span><div class="clink-body"><strong>Ottawa, Ontario, Canada</strong><span>Open to co-op & full-time roles</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Tools -->
-    <section id="tools" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Languages & Tools</h2>
-          <span class="stack">From ROS to React</span>
-        </div>
+<footer>
+  <div class="fl">© 2025 Karthikeyan Bhavani Shankar</div>
+  <div class="fr">
+    <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank">LinkedIn</a>
+    <a href="#home">Top ↑</a>
+  </div>
+</footer>
 
-        <div class="icon-grid" aria-label="Languages and tools">
-          <a class="icon" href="https://en.cppreference.com/w/c" target="_blank" rel="noopener"><img alt="C" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"/></a>
-          <a class="icon" href="https://en.cppreference.com
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function animCur(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animCur);})();
+document.querySelectorAll('a,button,.proj-row,.tcell,.sc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='#00e5a0';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px';ring.style.borderColor='#0a0a0a';});
+});
+
+// Canvas
+const cv=document.getElementById('hero-canvas'),ctx2=cv.getContext('2d');
+let W,H;
+function rsz(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+rsz();window.addEventListener('resize',rsz);
+let mo={x:W*.5,y:H*.5};
+document.addEventListener('mousemove',e=>{mo.x=e.clientX;mo.y=e.clientY;});
+
+class P{
+  constructor(){this.init();}
+  init(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.8+.3;this.vx=(Math.random()-.5)*.35;this.vy=-(Math.random()*.7+.2);this.life=Math.random();this.decay=Math.random()*.003+.001;this.volt=Math.random()>.65;}
+  update(){const dx=this.x-mo.x,dy=this.y-mo.y,d=Math.sqrt(dx*dx+dy*dy);if(d<200){const f=(200-d)/200;this.vx+=dx/d*f*.45;this.vy+=dy/d*f*.45;}this.vx*=.97;this.vy*=.97;this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;if(this.life<=0||this.y<-10)this.init();}
+  draw(){ctx2.beginPath();ctx2.arc(this.x,this.y,this.r,0,Math.PI*2);ctx2.fillStyle=this.volt?`rgba(0,229,160,${this.life*.65})`:`rgba(10,10,10,${this.life*.25})`;ctx2.fill();}
+}
+class CL{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.len=0;this.mlen=Math.random()*90+30;this.dir=[0,90,180,270][Math.floor(Math.random()*4)];this.spd=Math.random()*1.3+.4;this.life=1;this.dec=Math.random()*.005+.002;}
+  update(){this.len=Math.min(this.len+this.spd,this.mlen);this.life-=this.dec;if(this.life<=0)this.reset();}
+  draw(){const rad=this.dir*Math.PI/180;const ex=this.x+Math.cos(rad)*this.len,ey=this.y+Math.sin(rad)*this.len;ctx2.beginPath();ctx2.moveTo(this.x,this.y);ctx2.lineTo(ex,ey);ctx2.strokeStyle=`rgba(0,229,160,${this.life*.12})`;ctx2.lineWidth=.5;ctx2.stroke();ctx2.beginPath();ctx2.arc(ex,ey,1.4,0,Math.PI*2);ctx2.fillStyle=`rgba(0,229,160,${this.life*.35})`;ctx2.fill();}
+}
+const ps=Array.from({length:85},()=>new P());
+const cls=Array.from({length:20},()=>new CL());
+(function loop(){ctx2.clearRect(0,0,W,H);cls.forEach(c=>{c.update();c.draw();});for(let i=0;i<ps.length;i++){for(let j=i+1;j<ps.length;j++){const dx=ps[i].x-ps[j].x,dy=ps[i].y-ps[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<75){ctx2.beginPath();ctx2.moveTo(ps[i].x,ps[i].y);ctx2.lineTo(ps[j].x,ps[j].y);ctx2.strokeStyle=`rgba(0,229,160,${(1-d/75)*.055})`;ctx2.lineWidth=.4;ctx2.stroke();}}ps[i].update();ps[i].draw();}requestAnimationFrame(loop);})();
+
+// Scroll reveal
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');});},{threshold:.07});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+
+// Claude chat
+const SYS=`You are a concise portfolio assistant for Karthikeyan Bhavani Shankar, a 4th-year Computer Systems Engineering student at Carleton University in Ottawa, Canada (co-op program).
+KEY FACTS:
+- Capstone: Autonomous Navigation System — GNSS + IMU fusion on NVIDIA Jetson AGX Orin with ROS 2 Humble and EKF, cutting positional drift ~80% in outdoor tests
+- Projects: ElevatorSystemGUI (multithreaded Java/JavaFX elevator scheduler), booksortingUI (Python sorting algorithm visualizer)
+- Languages: C/C++, Python, Java, JavaScript, SQL, VHDL, Verilog, Go
+- Frameworks: ROS 2, Nav2, RViz2, TensorFlow, Keras, Flask, React, Node.js, Django, Pygame, JavaFX
+- Hardware: Jetson AGX Orin, u-blox ZED-F9R GNSS, IMUs, VL53L1X ToF, FPGA Design
+- Cloud: AWS, GCP, Jenkins, Linux
+- Data: pandas, NumPy, Matplotlib, PostgreSQL, SQLite
+- Open to co-op and full-time roles in embedded systems, robotics, and autonomous technology
+- GitHub: https://github.com/KarthikeyanBhavaniShankar
+- LinkedIn: https://www.linkedin.com/in/karthikeyan-bhavani-shankar/
+Be sharp, technical when warranted, and respond in 2-4 sentences. Use backtick formatting for code/tech terms.`;
+let hist=[];
+async function sendMsg(){
+  const inp=document.getElementById('chatInput'),btn=document.getElementById('chatSend');
+  const txt=inp.value.trim();if(!txt)return;
+  addM('user',txt);hist.push({role:'user',content:txt});inp.value='';btn.disabled=true;
+  const tid='t'+Date.now();addTyp(tid);
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:hist})});
+    const d=await r.json();removeTyp(tid);
+    const rep=d.content?.[0]?.text||'Connection error — please try again.';
+    hist.push({role:'assistant',content:rep});addM('claude',rep);
+  }catch{removeTyp(tid);addM('claude','Could not connect right now. Please try again shortly.');}
+  btn.disabled=false;
+}
+function addM(role,text){
+  const m=document.getElementById('msgs');
+  const d=document.createElement('div');d.className='msg '+role;
+  d.innerHTML=`<div class="msg-role">${role==='user'?'You':'Claude'}</div><div class="msg-body">${text.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\n/g,'<br>')}</div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function addTyp(id){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='msg claude';d.id=id;d.innerHTML='<div class="msg-role">Claude</div><div class="msg-body"><div class="tdots"><span></span><span></span><span></span></div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function removeTyp(id){const el=document.getElementById(id);if(el)el.remove();}
+function sendSugg(btn){document.getElementById('chatInput').value=btn.textContent.replace('↗ ','');sendMsg();}
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();sendMsg();}});
+</script>
+</body>
+</html>
