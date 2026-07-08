@@ -3,1031 +3,1109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio of Karthikeyan Bhavani Shankar, Computer Systems Engineering graduate from Carleton University." />
-  <title>Karthikeyan Bhavani Shankar | Computer Systems Engineering Graduate</title>
+  <meta name="description" content="Karthikeyan Bhavani Shankar — Computer Systems Engineering, Carleton University. Software, embedded, and data systems engineering." />
+  <title>Karthikeyan Bhavani Shankar — Systems Engineer</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    /* ================================================================
+       TOKENS — cinematic dark: void black, blue→violet energy,
+       mono accents for the "engineering" texture.
+       ================================================================ */
     :root {
-      --bg: #f7f4ee;
-      --bg-soft: #fffaf1;
-      --ink: #15120f;
-      --muted: #6e665e;
-      --line: rgba(21, 18, 15, 0.14);
-      --card: rgba(255, 250, 241, 0.82);
-      --accent: #5f2cff;
-      --accent-dark: #3815b7;
-      --shadow: 0 26px 70px rgba(21, 18, 15, 0.10);
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --heading: "Syne", system-ui, sans-serif;
+      --bg: #030304;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-2: rgba(255, 255, 255, 0.06);
+      --ink: #f5f5f7;
+      --muted: #8a8a94;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #3b82f6;
+      --accent-2: #8b5cf6;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --grad: linear-gradient(100deg, #3b82f6, #8b5cf6);
+      --radius: 18px;
+      --radius-lg: 26px;
+      --display: "Inter Tight", "Inter", system-ui, sans-serif;
       --body: "Inter", system-ui, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      min-height: 100vh;
       font-family: var(--body);
+      background: var(--bg);
       color: var(--ink);
-      background:
-        radial-gradient(circle at 12% 18%, rgba(95, 44, 255, 0.18), transparent 32rem),
-        radial-gradient(circle at 86% 6%, rgba(95, 44, 255, 0.10), transparent 28rem),
-        linear-gradient(135deg, #f7f4ee 0%, #fffaf1 48%, #eee8db 100%);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: white; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+    .page { width: min(1140px, calc(100% - 40px)); margin: 0 auto; }
+    h1, h2, h3 { font-family: var(--display); letter-spacing: -0.035em; }
+
+    /* Blueprint grid backdrop — faint engineering-paper texture */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
+      z-index: 0;
       pointer-events: none;
-      opacity: 0.45;
       background-image:
-        linear-gradient(rgba(21, 18, 15, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(21, 18, 15, 0.045) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
-      z-index: -2;
+        linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 80%);
     }
 
-    body::after {
-      content: "";
+    /* Scroll progress bar */
+    #progress {
       position: fixed;
-      width: 420px;
-      height: 420px;
-      right: -150px;
-      bottom: -120px;
-      border-radius: 999px;
-      background: rgba(95, 44, 255, 0.15);
-      filter: blur(10px);
-      z-index: -3;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--grad);
+      z-index: 200;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.8);
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    main, .nav, footer { position: relative; z-index: 1; }
 
-    .page {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-    }
-
+    /* ================================================================
+       NAV — floating glass pill
+       ================================================================ */
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      border-bottom: 1px solid var(--line);
-      background: rgba(247, 244, 238, 0.78);
-      backdrop-filter: blur(18px);
-    }
-
-    .nav-inner {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      min-height: 72px;
+      position: fixed;
+      top: 16px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: min(1140px, calc(100% - 32px));
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--heading);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--ink);
-      border-radius: 12px;
-      background: var(--accent);
-      color: white;
-      box-shadow: 6px 6px 0 var(--ink);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-links a {
-      padding: 10px 14px;
+      gap: 20px;
+      padding: 10px 10px 10px 20px;
       border: 1px solid transparent;
       border-radius: 999px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
-      transition: 180ms ease;
+      transition: background 300ms ease, border-color 300ms ease, width 300ms var(--ease);
     }
-
-    .nav-links a:hover {
+    .nav.scrolled {
+      width: min(780px, calc(100% - 32px));
+      background: rgba(8, 8, 10, 0.75);
       border-color: var(--line);
-      color: var(--ink);
-      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(20px) saturate(1.4);
     }
 
-    .nav-links .nav-button {
-      border-color: var(--ink);
-      background: var(--ink);
-      color: white;
-    }
+    .brand { font-family: var(--mono); font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 10px; }
+    .brand .prompt { color: var(--accent); }
+    .brand .cursor-blink { display: inline-block; width: 8px; height: 15px; background: var(--accent); animation: blink 1.1s steps(1) infinite; vertical-align: -2px; }
+    @keyframes blink { 50% { opacity: 0; } }
 
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 9px 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--muted); transition: 180ms ease; }
+    .nav-links a:hover { color: var(--ink); background: var(--surface-2); }
+    .nav-cta { background: var(--ink); color: #0a0a0c !important; font-weight: 700; padding: 9px 16px !important; }
+    .nav-cta:hover { background: white !important; transform: scale(1.04); }
+
+    /* ================================================================
+       HERO — kinetic headline + live terminal
+       ================================================================ */
     .hero {
-      min-height: calc(100vh - 72px);
+      position: relative;
+      min-height: 100svh;
       display: grid;
-      grid-template-columns: 1.16fr 0.84fr;
-      align-items: center;
-      gap: 52px;
-      padding: 76px 0 46px;
+      align-content: center;
+      padding: 150px 0 80px;
     }
 
-    .eyebrow {
-      width: max-content;
-      display: inline-flex;
+    .hero .glow {
+      position: absolute;
+      top: -22%; left: 50%;
+      transform: translateX(-50%);
+      width: 1100px; height: 700px;
+      background:
+        radial-gradient(ellipse 46% 50% at 46% 42%, rgba(59, 130, 246, 0.26), transparent 70%),
+        radial-gradient(ellipse 40% 44% at 60% 52%, rgba(139, 92, 246, 0.20), transparent 70%);
+      filter: blur(24px);
+      pointer-events: none;
+      animation: breathe 9s ease-in-out infinite alternate;
+    }
+    @keyframes breathe { from { opacity: 0.75; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(1.06); } }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
       align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      width: max-content;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.45);
+      background: var(--surface);
+      backdrop-filter: blur(8px);
       color: var(--muted);
-      font-size: 0.83rem;
-      font-weight: 800;
-      margin-bottom: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 24px;
     }
-
-    .eyebrow::before {
-      content: "";
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 7px rgba(95, 44, 255, 0.14);
-    }
-
-    h1, h2, h3 {
-      font-family: var(--heading);
-      letter-spacing: -0.06em;
-    }
+    .hero-badge b { color: var(--ink); }
+    .hero-badge::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--ok); box-shadow: 0 0 10px rgba(34,197,94,0.9); }
 
     .hero h1 {
-      max-width: 850px;
-      font-size: clamp(3.4rem, 8vw, 7.8rem);
-      line-height: 0.88;
-      margin-bottom: 26px;
+      font-size: clamp(2.8rem, 6.2vw, 4.9rem);
+      line-height: 1.0;
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      margin-bottom: 22px;
     }
+    /* kinetic lines lift in with a blur-out */
+    .hero h1 .line { display: block; overflow: hidden; }
+    .hero h1 .line > span {
+      display: inline-block;
+      transform: translateY(110%);
+      filter: blur(8px);
+      animation: rise 950ms var(--ease) forwards;
+      animation-delay: var(--d, 0ms);
+    }
+    @keyframes rise { to { transform: translateY(0); filter: blur(0); } }
+    .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    .hero h1 span {
-      color: var(--accent);
-    }
+    .hero .sub { color: var(--muted); line-height: 1.75; font-size: 1.05rem; margin-bottom: 30px; max-width: 540px; }
+    .hero .sub strong { color: var(--ink); font-weight: 600; }
 
-    .tagline {
-      max-width: 690px;
-      color: var(--muted);
-      font-size: clamp(1.02rem, 1.8vw, 1.2rem);
-      line-height: 1.8;
-      margin-bottom: 30px;
-    }
-
-    .tagline strong {
-      color: var(--ink);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
 
     .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      min-height: 48px; padding: 0 22px;
+      border-radius: 999px; font-weight: 700; font-size: 0.94rem;
+      border: 1px solid transparent;
+      transition: transform 220ms var(--ease), box-shadow 220ms ease, background 220ms ease, border-color 220ms ease;
+    }
+    .btn:hover { transform: translateY(-2px) scale(1.02); }
+    .btn-primary { background: var(--grad); color: white; box-shadow: 0 8px 30px rgba(59,130,246,0.35); }
+    .btn-primary:hover { box-shadow: 0 14px 46px rgba(59,130,246,0.5); }
+    .btn-ghost { background: var(--surface); border-color: var(--line); color: var(--ink); backdrop-filter: blur(8px); }
+    .btn-ghost:hover { background: var(--surface-2); border-color: rgba(255,255,255,0.22); }
+
+    /* Software / Hardware segmented control */
+    .track-toggle {
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      min-height: 50px;
-      padding: 0 20px;
-      border: 1px solid var(--ink);
-      border-radius: 999px;
-      font-weight: 800;
-      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 7px 7px 0 var(--ink);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--ink);
-    }
-
-    .btn:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 10px 10px 0 var(--ink);
-    }
-
-    .hero-panel {
-      border: 1px solid var(--ink);
-      border-radius: var(--radius-xl);
-      background: var(--card);
-      box-shadow: 14px 14px 0 var(--ink), var(--shadow);
-      overflow: hidden;
-      transform: rotate(1.3deg);
-    }
-
-    .panel-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--ink);
-      padding: 16px 18px;
-      background: white;
-    }
-
-    .dots {
-      display: flex;
-      gap: 7px;
-    }
-
-    .dots span {
-      width: 11px;
-      height: 11px;
-      border: 1px solid var(--ink);
-      border-radius: 999px;
-      background: var(--accent);
-    }
-
-    .panel-top p {
-      color: var(--muted);
-      font-size: 0.83rem;
-      font-weight: 800;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .stat {
-      min-height: 160px;
-      padding: 26px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .stat:nth-child(odd) {
-      border-right: 1px solid var(--line);
-    }
-
-    .stat-number {
-      font-family: var(--heading);
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      line-height: 1;
-      color: var(--accent);
-      letter-spacing: -0.08em;
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-weight: 700;
-      line-height: 1.45;
-    }
-
-    section {
-      padding: 82px 0;
-    }
-
-    .section-heading {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 30px;
-      align-items: end;
-      margin-bottom: 32px;
-    }
-
-    .section-kicker {
-      color: var(--accent);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.78rem;
-      margin-bottom: 10px;
-    }
-
-    .section-heading h2 {
-      font-size: clamp(2.4rem, 5vw, 5rem);
-      line-height: 0.92;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 1rem;
-    }
-
-    .about-card {
-      border: 1px solid var(--ink);
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.52);
-      box-shadow: var(--shadow);
-      padding: 34px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    .about-card p {
-      color: var(--muted);
-      line-height: 1.85;
-    }
-
-    .about-card strong {
-      color: var(--ink);
-    }
-
-    .experience-note {
+      width: max-content;
+      padding: 4px;
       border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      background: var(--bg-soft);
-    }
-
-    .experience-note h3 {
-      font-size: 1.6rem;
-      margin-bottom: 12px;
-    }
-
-    .experience-note ul {
-      display: grid;
-      gap: 12px;
-      list-style: none;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .experience-note li {
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 8px;
-    }
-
-    .experience-note li::before {
-      content: "↳";
-      color: var(--accent);
-      font-weight: 900;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .project-card, .skill-card {
+      border-radius: 999px;
+      background: var(--surface);
+      backdrop-filter: blur(8px);
       position: relative;
-      isolation: isolate;
-      border: 1px solid var(--ink);
+    }
+    .track-toggle button {
+      appearance: none; border: 0; background: transparent;
+      color: var(--muted); font: inherit; font-weight: 700; font-size: 0.86rem;
+      padding: 9px 18px; border-radius: 999px; cursor: pointer;
+      position: relative; z-index: 1; transition: color 220ms ease;
+    }
+    .track-toggle button[aria-pressed="true"] { color: white; }
+    .track-thumb { position: absolute; top: 4px; bottom: 4px; border-radius: 999px; background: var(--grad); transition: left 320ms var(--ease), width 320ms var(--ease); }
+
+    /* ---------- Hero terminal (live typing) ---------- */
+    .terminal {
+      border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.48);
-      padding: 26px;
-      min-height: 260px;
+      background: rgba(10, 10, 14, 0.85);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 60px rgba(59,130,246,0.08);
       overflow: hidden;
-      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+      font-family: var(--mono);
+      font-size: 0.83rem;
+      animation: drift 7s ease-in-out infinite alternate;
     }
+    @keyframes drift { from { translate: 0 5px; } to { translate: 0 -7px; } }
 
-    .project-card::before, .skill-card::before {
-      content: "";
-      position: absolute;
-      inset: auto -35px -55px auto;
-      width: 140px;
-      height: 140px;
-      border-radius: 999px;
-      background: rgba(95, 44, 255, 0.12);
-      z-index: -1;
-      transition: transform 220ms ease;
-    }
-
-    .project-card:hover, .skill-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 12px 12px 0 var(--ink), var(--shadow);
-      background: white;
-    }
-
-    .project-card:hover::before, .skill-card:hover::before {
-      transform: scale(1.45);
-    }
-
-    .project-card.featured {
-      grid-column: span 2;
-      display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 28px;
-      background: var(--accent);
-      color: white;
-    }
-
-    .project-card.featured::before {
-      background: rgba(255, 255, 255, 0.14);
-    }
-
-    .project-number {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      border: 1px solid currentColor;
-      border-radius: 15px;
-      font-weight: 900;
-      margin-bottom: 22px;
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    .project-card h3 {
-      font-size: clamp(1.45rem, 2vw, 2.2rem);
-      line-height: 1.05;
-      margin-bottom: 14px;
-    }
-
-    .project-card p {
+    .terminal-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
       color: var(--muted);
-      line-height: 1.72;
     }
+    .terminal-bar .dot { width: 11px; height: 11px; border-radius: 999px; }
+    .terminal-bar .dot:nth-child(1) { background: #ff5f57; }
+    .terminal-bar .dot:nth-child(2) { background: #febc2e; }
+    .terminal-bar .dot:nth-child(3) { background: #28c840; }
+    .terminal-bar span { margin-left: 8px; font-size: 0.78rem; }
 
-    .project-card.featured p {
-      color: rgba(255, 255, 255, 0.82);
+    .terminal-body { padding: 18px; min-height: 300px; line-height: 1.85; }
+    .terminal-body .ln { white-space: pre-wrap; word-break: break-word; }
+    .t-prompt { color: var(--ok); }
+    .t-cmd { color: var(--ink); }
+    .t-dim { color: var(--muted); }
+    .t-blue { color: #7ab3ff; }
+    .t-violet { color: #b799ff; }
+    .t-ok { color: var(--ok); }
+    .caret { display: inline-block; width: 9px; height: 16px; background: var(--ink); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+
+    /* ================================================================
+       TECH TICKER — infinite marquee
+       ================================================================ */
+    .ticker {
+      position: relative;
+      border-block: 1px solid var(--line);
+      padding: 18px 0;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
     }
-
-    .stack {
+    .ticker-track {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 22px;
+      gap: 44px;
+      width: max-content;
+      animation: marquee 32s linear infinite;
     }
-
-    .pill {
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .ticker-track span {
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--muted);
       display: inline-flex;
       align-items: center;
-      min-height: 32px;
-      padding: 0 12px;
-      border: 1px solid currentColor;
-      border-radius: 999px;
+      gap: 44px;
+      white-space: nowrap;
+    }
+    .ticker-track span::after { content: "◆"; color: var(--accent); font-size: 0.6rem; opacity: 0.7; }
+
+    /* ================================================================
+       SECTIONS
+       ================================================================ */
+    section { position: relative; padding: 96px 0; }
+
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
       color: var(--accent);
-      background: rgba(95, 44, 255, 0.07);
-      font-size: 0.78rem;
-      font-weight: 900;
-    }
-
-    .featured .pill {
-      color: white;
-      background: rgba(255, 255, 255, 0.14);
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .skill-card {
-      min-height: auto;
-    }
-
-    .skill-card h3 {
-      font-size: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.76rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.16em;
       margin-bottom: 14px;
     }
+    .kicker::before { content: ""; width: 20px; height: 2px; background: var(--grad); border-radius: 2px; }
 
-    .skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .skill-list span {
-      padding: 8px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      background: var(--bg-soft);
-      font-size: 0.86rem;
-      font-weight: 700;
-    }
-
-    .contact-card {
-      border: 1px solid var(--ink);
-      border-radius: var(--radius-xl);
-      background: var(--ink);
-      color: white;
-      padding: 42px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 34px;
-      box-shadow: 14px 14px 0 var(--accent);
-    }
-
-    .contact-card h2 {
-      font-size: clamp(2.4rem, 5vw, 5rem);
-      line-height: 0.94;
-      margin-bottom: 18px;
-    }
-
-    .contact-card p {
-      max-width: 650px;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.8;
-    }
-
-    .contact-links {
-      display: grid;
-      gap: 12px;
-      align-content: center;
-    }
-
-    .contact-links a {
-      padding: 16px 18px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 999px;
-      color: white;
-      font-weight: 900;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      transition: background 180ms ease, transform 180ms ease;
-    }
-
-    .contact-links a:hover {
-      background: var(--accent);
-      transform: translateX(6px);
-    }
-
-    footer {
-      padding: 34px 0 48px;
-      color: var(--muted);
-      text-align: center;
-      font-weight: 700;
-    }
+    .section-head { max-width: 760px; margin-bottom: 44px; }
+    .section-head h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); line-height: 1.06; font-weight: 800; margin-bottom: 14px; }
+    .section-head p { color: var(--muted); line-height: 1.75; }
 
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 700ms ease, transform 700ms ease;
+      transform: translateY(30px);
+      filter: blur(6px);
+      transition: opacity 800ms var(--ease), transform 800ms var(--ease), filter 800ms var(--ease);
+      transition-delay: var(--stagger, 0ms);
+    }
+    .reveal.visible { opacity: 1; transform: none; filter: none; }
+
+    /* ================================================================
+       EXPERIENCE
+       ================================================================ */
+    .xp-list { display: grid; gap: 14px; }
+    .xp-row {
+      display: grid; grid-template-columns: 210px 1fr; gap: 26px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      transition: background 240ms ease, border-color 240ms ease, transform 240ms var(--ease);
+    }
+    .xp-row:hover { background: var(--surface-2); border-color: rgba(255,255,255,0.18); transform: translateY(-3px); }
+    .xp-meta time { display: block; font-family: var(--mono); color: var(--muted); font-size: 0.78rem; margin-bottom: 6px; }
+    .xp-meta .org { font-family: var(--display); font-weight: 700; font-size: 1.05rem; }
+    .xp-meta .loc { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+    .xp-body h3 { font-size: 1.2rem; margin-bottom: 10px; }
+    .xp-body ul { list-style: none; display: grid; gap: 9px; }
+    .xp-body li { color: var(--muted); line-height: 1.65; font-size: 0.94rem; padding-left: 18px; position: relative; }
+    .xp-body li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 6px; border-radius: 2px; background: var(--grad); }
+
+    /* ================================================================
+       PROJECTS — media cards with animated SVG headers
+       ================================================================ */
+    .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; perspective: 1400px; }
+
+    .card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: border-color 240ms ease, opacity 400ms ease, filter 400ms ease;
+    }
+    .card::before {
+      content: "";
+      position: absolute; inset: 0; z-index: 2;
+      background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 50%), rgba(99,102,241,0.12), transparent 65%);
+      opacity: 0; transition: opacity 300ms ease; pointer-events: none;
+    }
+    .card:hover { border-color: rgba(255,255,255,0.22); }
+    .card:hover::before { opacity: 1; }
+    .card.span-4 { grid-column: span 4; }
+    .card.span-3 { grid-column: span 3; }
+    .card.span-2 { grid-column: span 2; }
+    .card.dim { opacity: 0.2; filter: saturate(0.2) blur(1px); }
+
+    /* Media header holding the animated SVG scene */
+    .card-media {
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      aspect-ratio: 16 / 7.5;
+      overflow: hidden;
+    }
+    .card.span-3 .card-media, .card.span-2 .card-media { aspect-ratio: 16 / 8.5; }
+    .card-media svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    .card-body { padding: 24px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+    .card-tag {
+      display: inline-flex; width: max-content;
+      padding: 5px 11px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .card h3 { font-size: 1.28rem; font-weight: 700; line-height: 1.15; }
+    .card-body > p { color: var(--muted); line-height: 1.66; font-size: 0.93rem; flex: 1; }
+    .stack { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pill {
+      padding: 5px 11px; border-radius: 999px;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);
+      color: #9ec2ff; font-size: 0.75rem; font-weight: 700;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    /* ---------------- SVG scene animations ---------------- */
+    /* GNSS trajectory: noisy path fades, fused path draws in */
+    .traj-raw { stroke-dasharray: 4 5; animation: dashmove 1.4s linear infinite; }
+    .traj-fused { stroke-dasharray: 620; stroke-dashoffset: 620; animation: draw 4s var(--ease) infinite; }
+    @keyframes draw { 0% { stroke-dashoffset: 620; } 55%, 100% { stroke-dashoffset: 0; } }
+    @keyframes dashmove { to { stroke-dashoffset: -18; } }
+    .sat-ping { animation: ping 2.4s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes ping { 0% { opacity: 0.9; transform: scale(0.4); } 80%, 100% { opacity: 0; transform: scale(2.2); } }
+    .rover-dot { animation: roverGlow 2s ease-in-out infinite alternate; }
+    @keyframes roverGlow { from { filter: drop-shadow(0 0 2px #3b82f6); } to { filter: drop-shadow(0 0 9px #3b82f6); } }
+
+    /* Circuit board: current pulses along traces */
+    .trace { stroke-dasharray: 6 90; animation: current 3.2s linear infinite; }
+    .trace.t2 { animation-delay: 0.7s; }
+    .trace.t3 { animation-delay: 1.4s; }
+    .trace.t4 { animation-delay: 2.1s; }
+    @keyframes current { to { stroke-dashoffset: -192; } }
+    .led { animation: ledblink 1.6s steps(1) infinite; }
+    .led.l2 { animation-delay: 0.5s; }
+    .led.l3 { animation-delay: 1s; }
+    @keyframes ledblink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.15; } }
+
+    /* Oscilloscope sweep */
+    .scope-wave { stroke-dasharray: 900; stroke-dashoffset: 900; animation: sweep 3s linear infinite; }
+    @keyframes sweep { to { stroke-dashoffset: 0; } }
+
+    /* Data pipeline: packets flow between stages */
+    .packet { animation: flow 2.6s linear infinite; }
+    .packet.p2 { animation-delay: 0.9s; }
+    .packet.p3 { animation-delay: 1.7s; }
+    @keyframes flow { 0% { transform: translateX(0); opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { transform: translateX(300px); opacity: 0; } }
+    .stage-ok { animation: stagePulse 2.6s ease infinite; }
+    @keyframes stagePulse { 0%, 70%, 100% { opacity: 0.55; } 80% { opacity: 1; } }
+
+    /* Gauge needle & droplet for greenhouse */
+    .needle { transform-origin: 60px 58px; animation: needleSwing 4s var(--ease) infinite alternate; }
+    @keyframes needleSwing { from { transform: rotate(-52deg); } to { transform: rotate(38deg); } }
+    .drop { animation: dropFall 2.2s ease-in infinite; }
+    .drop.d2 { animation-delay: 1.1s; }
+    @keyframes dropFall { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(26px); opacity: 0; } }
+
+    /* Sensor cones sweeping on the robot */
+    .cone { transform-origin: 50% 100%; animation: sweepCone 2.8s ease-in-out infinite alternate; opacity: 0.5; }
+    @keyframes sweepCone { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+
+    /* Mini code editor typing shimmer */
+    .code-line { opacity: 0; animation: lineIn 600ms ease forwards; }
+    .code-line:nth-child(1) { animation-delay: 0.2s; }
+    .code-line:nth-child(2) { animation-delay: 0.6s; }
+    .code-line:nth-child(3) { animation-delay: 1.0s; }
+    .code-line:nth-child(4) { animation-delay: 1.4s; }
+    .code-line:nth-child(5) { animation-delay: 1.8s; }
+    .code-line:nth-child(6) { animation-delay: 2.2s; }
+    @keyframes lineIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+
+    /* ================================================================
+       SKILLS
+       ================================================================ */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .skill-group {
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      background: var(--surface); padding: 24px;
+      transition: background 240ms ease, border-color 240ms ease, transform 240ms var(--ease), opacity 400ms ease, filter 400ms ease;
+    }
+    .skill-group:hover { background: var(--surface-2); transform: translateY(-3px); border-color: rgba(255,255,255,0.18); }
+    .skill-group.dim { opacity: 0.2; filter: saturate(0.2) blur(1px); }
+    .skill-group h3 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 9px; }
+    .skill-group h3::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: var(--grad); }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chips span { padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.03); color: var(--muted); font-size: 0.82rem; font-weight: 600; }
+
+    /* ================================================================
+       EDUCATION
+       ================================================================ */
+    .edu {
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px;
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      background: radial-gradient(600px circle at 0% 0%, rgba(59,130,246,0.1), transparent 60%), var(--surface);
+      padding: 30px;
+    }
+    .edu h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+    .edu p { color: var(--muted); line-height: 1.7; font-size: 0.94rem; }
+    .edu .awards { display: grid; gap: 8px; }
+    .edu .awards span {
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid rgba(139,92,246,0.35); background: rgba(139,92,246,0.1);
+      color: #c9b3ff; font-size: 0.82rem; font-weight: 700; white-space: nowrap;
     }
 
-    @media (max-width: 960px) {
-      .hero,
-      .section-heading,
-      .about-card,
-      .contact-card,
-      .project-card.featured {
-        grid-template-columns: 1fr;
-      }
+    /* ================================================================
+       CONTACT
+       ================================================================ */
+    .contact {
+      position: relative; text-align: center;
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      overflow: hidden; padding: 84px 30px;
+      background:
+        radial-gradient(700px circle at 50% 130%, rgba(59,130,246,0.24), transparent 65%),
+        radial-gradient(520px circle at 62% 140%, rgba(139,92,246,0.18), transparent 65%),
+        var(--surface);
+    }
+    .contact h2 { font-size: clamp(2rem, 5vw, 3.7rem); font-weight: 800; margin-bottom: 14px; letter-spacing: -0.04em; }
+    .contact > p { color: var(--muted); max-width: 540px; margin: 0 auto 30px; line-height: 1.7; }
+    .contact-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 26px; }
+    .contact-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; color: var(--muted); font-size: 0.88rem; font-weight: 600; }
+    .contact-meta a:hover { color: var(--ink); }
 
-      .hero {
-        min-height: auto;
-        padding-top: 54px;
-      }
+    footer { padding: 42px 0 56px; text-align: center; color: var(--muted); font-size: 0.85rem; font-weight: 600; }
+    footer .mono { font-family: var(--mono); font-size: 0.78rem; opacity: 0.7; }
 
-      .hero-panel {
-        transform: none;
-      }
-
-      .projects-grid,
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-card.featured {
-        grid-column: span 1;
-      }
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+    @media (max-width: 980px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .bento { grid-template-columns: 1fr 1fr; }
+      .card.span-4, .card.span-3, .card.span-2 { grid-column: span 2; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .xp-row { grid-template-columns: 1fr; gap: 12px; }
+      .edu { grid-template-columns: 1fr; }
+      .edu .awards { display: flex; flex-wrap: wrap; }
+    }
+    @media (max-width: 640px) {
+      .page { width: calc(100% - 32px); }
+      section { padding: 64px 0; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .skills-grid, .bento { grid-template-columns: 1fr; }
+      .card.span-4, .card.span-3, .card.span-2 { grid-column: span 1; }
+      .terminal-body { min-height: 240px; }
     }
 
-    @media (max-width: 720px) {
-      .page,
-      .nav-inner {
-        width: min(100% - 28px, 1180px);
-      }
-
-      .nav-inner {
-        min-height: 64px;
-      }
-
-      .nav-links a:not(.nav-button) {
-        display: none;
-      }
-
-      .brand span:last-child {
-        display: none;
-      }
-
-      section {
-        padding: 58px 0;
-      }
-
-      .hero h1 {
-        font-size: clamp(3.2rem, 15vw, 5.2rem);
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .stat:nth-child(odd) {
-        border-right: 0;
-      }
-
-      .about-card,
-      .project-card,
-      .skill-card,
-      .contact-card {
-        padding: 22px;
-      }
-
-      .contact-card {
-        box-shadow: 8px 8px 0 var(--accent);
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1; transform: none; filter: none; }
+      .ticker-track { animation: none; }
     }
   </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="Go to top">
-        <span class="brand-mark">KB</span>
-        <span>Karthikeyan</span>
-      </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a class="nav-button" href="#contact">Contact</a>
-      </nav>
+  <div id="progress" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav" aria-label="Primary navigation">
+    <a class="brand" href="#top"><span class="prompt">~/</span>karthikeyan<span class="cursor-blink" aria-hidden="true"></span></a>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a class="nav-cta" href="#contact">Get in touch</a>
     </div>
-  </header>
+  </nav>
 
-  <main id="top" class="page">
-    <section class="hero">
-      <div class="hero-copy reveal">
-        <div class="eyebrow">Carleton University · Computer Systems Engineering</div>
-        <h1>Karthikeyan Bhavani Shankar<span>.</span></h1>
-        <p class="tagline">
-          Computer Systems Engineering graduate building <strong>reliable backend systems</strong>,
-          <strong>distributed data workflows</strong>, and <strong>embedded software</strong> for real-world constraints.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#projects">View Projects →</a>
-          <a class="btn btn-secondary" href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="btn btn-secondary" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
-      </div>
-
-      <aside class="hero-panel reveal" aria-label="Portfolio highlights">
-        <div class="panel-top">
-          <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
-          <p>portfolio.metrics</p>
-        </div>
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-number"><span class="counter" data-target="5">0</span></div>
-            <div class="stat-label">Featured engineering projects</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number"><span class="counter" data-target="200">0</span>+</div>
-            <div class="stat-label">AutoDQ validation rules supported</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number"><span class="counter" data-target="80">0</span>%</div>
-            <div class="stat-label">GNSS/IMU drift reduction in field testing</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number"><span class="counter" data-target="10">0</span>+</div>
-            <div class="stat-label">Rule-based and schema-derived checks implemented</div>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <section id="about">
-      <div class="section-heading reveal">
+  <main id="top">
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="page hero-inner">
         <div>
-          <div class="section-kicker">About</div>
-          <h2>Software, systems, and data that hold up in practice.</h2>
-        </div>
-        <p>
-          I enjoy building at the intersection of backend engineering, embedded systems, robotics, and data platforms — where performance, scalability, reliability, and disciplined debugging matter.
-        </p>
-      </div>
-
-      <div class="about-card reveal">
-        <div>
-          <p>
-            I am a <strong>Computer Systems Engineering graduate from Carleton University</strong> with a strong foundation in backend systems, distributed applications, and embedded software. My interests lie in building reliable, production-ready systems that operate under real-world constraints.
+          <div class="hero-badge"><b>Available for full-time roles</b> · Ottawa, Ontario</div>
+          <h1 aria-label="I build software that talks to hardware.">
+            <span class="line" aria-hidden="true"><span style="--d:0ms">I build software</span></span>
+            <span class="line" aria-hidden="true"><span style="--d:140ms">that talks to</span></span>
+            <span class="line" aria-hidden="true"><span style="--d:280ms" class="grad">hardware.</span></span>
+          </h1>
+          <p class="sub" id="heroSub">
+            I'm <strong>Karthikeyan Bhavani Shankar</strong> — Computer Systems Engineering, Carleton University (Apr 2026).
+            Backend & data platforms, real-time robotics, and embedded systems.
           </p>
-          <br>
-          <p>
-            Beyond industry experience, I have built and optimized real-time systems including a GNSS/IMU localization pipeline for autonomous robotics, focusing on debugging, sensor fusion, and performance tuning.
-          </p>
-        </div>
-        <div class="experience-note">
-          <h3>KData AI · AI/ML Engineer Intern</h3>
-          <ul>
-            <li>Designed and implemented distributed data validation architectures within Databricks, developing rule-based and schema-aware engines to enforce data integrity across large-scale Spark and Delta Lake workloads.</li>
-            <li>Implemented PySpark-based validation logic and schema-derived checks for missing values, schema drift, and data inconsistencies.</li>
-            <li>Integrated automated validation logic into CI/CD-managed Databricks workflows, improving production data reliability.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="section-heading reveal">
-        <div>
-          <div class="section-kicker">Projects</div>
-          <h2>Selected work across data, robotics, and embedded systems.</h2>
-        </div>
-        <p>
-          A grid of projects showing practical engineering work: production data quality, autonomous localization, backend API design, embedded control, and machine learning applications.
-        </p>
-      </div>
-
-      <div class="projects-grid">
-        <article class="project-card featured reveal">
-          <div>
-            <div class="project-number">01</div>
-            <h3>AutoDQ Data Quality Accelerator</h3>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View my work</a>
+            <a class="btn btn-ghost" href="SWE_RESUME.pdf" download>↓ Software resume</a>
+            <a class="btn btn-ghost" href="HWE_RESUME.pdf" download>↓ Hardware resume</a>
           </div>
-          <div>
-            <p>
-              Contributed to AutoDQ at KData AI, a Databricks-native accelerator supporting enterprise data quality workflows. Built and tested validation logic for schema-derived checks, missing values, schema drift, and data inconsistencies across Spark-based pipelines.
-            </p>
-            <div class="stack">
-              <span class="pill">Databricks</span>
-              <span class="pill">PySpark</span>
-              <span class="pill">Data Quality</span>
-              <span class="pill">CI/CD</span>
+          <div class="track-toggle" role="group" aria-label="Filter portfolio by focus">
+            <div class="track-thumb" aria-hidden="true"></div>
+            <button type="button" data-track="all" aria-pressed="true">All</button>
+            <button type="button" data-track="software" aria-pressed="false">Software</button>
+            <button type="button" data-track="hardware" aria-pressed="false">Hardware</button>
+          </div>
+        </div>
+
+        <!-- Live terminal: boots up and types the profile -->
+        <div class="terminal" aria-label="Terminal animation summarizing profile">
+          <div class="terminal-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span>karthikeyan@systems — zsh</span>
+          </div>
+          <div class="terminal-body" id="terminal"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= TECH TICKER ================= -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker">
+        <!-- populated & duplicated by JS for a seamless loop -->
+      </div>
+    </div>
+
+    <div class="page">
+      <!-- ================= EXPERIENCE ================= -->
+      <section id="experience">
+        <div class="section-head reveal">
+          <div class="kicker">experience.log</div>
+          <h2>Where I've built and shipped.</h2>
+        </div>
+
+        <div class="xp-list">
+          <article class="xp-row reveal">
+            <div class="xp-meta">
+              <time>SEPT 2025 → APR 2026</time>
+              <div class="org">KData AI</div>
+              <div class="loc">Ottawa, Ontario</div>
             </div>
-          </div>
-        </article>
+            <div class="xp-body">
+              <h3>AI/ML Engineer Intern</h3>
+              <ul>
+                <li>Designed and implemented distributed data validation architectures within Databricks, engineering rule-based and schema-aware engines to enforce data integrity across large-scale Apache Spark and Delta Lake workloads.</li>
+                <li>Spearheaded automated validation orchestration integrated with CI/CD pipelines and production data platforms, strengthening reliability, scalability, and governance of enterprise analytics systems.</li>
+                <li>Collaborated with cross-functional teams to document data quality standards and validation processes, improving pipeline observability and reducing production incidents.</li>
+              </ul>
+            </div>
+          </article>
 
-        <article class="project-card reveal">
-          <div class="project-number">02</div>
-          <h3>ROS 2 GNSS/IMU Localization System</h3>
-          <p>
-            Built a real-time localization pipeline in ROS 2 incorporating GNSS and IMU data through an Extended Kalman Filter. Tuned fusion parameters and debugged deployment on Jetson AGX Orin hardware.
-          </p>
-          <div class="stack">
-            <span class="pill">ROS 2</span>
-            <span class="pill">Python</span>
-            <span class="pill">C++</span>
-            <span class="pill">Linux</span>
-            <span class="pill">EKF</span>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-number">03</div>
-          <h3>Apple Fitness–Inspired Tracker</h3>
-          <p>
-             Built a full-stack fitness tracking web application inspired by Apple Fitness, featuring animated SVG activity rings, weekly analytics dashboards, goal tracking, and responsive glassmorphism UI.
-  Designed a FastAPI backend with SQLAlchemy and SQLite persistence, exposing REST endpoints for activity logging and real-time progress visualization.
-</p>
-          </p>
-          <div class="stack">
-            <span class="pill">FastAPI</span>
-            <span class="pill">Python</span>
-            <span class="pill">SQLite</span>
-            <span class="pill">Chart.js</span>
-            <span class="pill">HTML/CSS/JS</span>
-            <span class="pill">REST API</span>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-number">04</div>
-          <h3>Autonomous Snowplowing Robot</h3>
-          <p>
-            Engineered an autonomous embedded robot integrating IR, ultrasonic, and IMU sensors for obstacle detection and bounded arena navigation with real-time decision-making.
-          </p>
-          <div class="stack">
-            <span class="pill">C++</span>
-            <span class="pill">Arduino</span>
-            <span class="pill">Embedded</span>
-            <span class="pill">FSM</span>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-number">05</div>
-          <h3>Machine Learning Applications</h3>
-          <p>
-            Applied CNNs and RNNs for image classification and sentiment analysis, while using Apache Spark MLlib to support larger-scale data processing and model experimentation.
-          </p>
-          <div class="stack">
-            <span class="pill">Python</span>
-            <span class="pill">TensorFlow</span>
-            <span class="pill">Spark</span>
-            <span class="pill">MLlib</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="section-heading reveal">
-        <div>
-          <div class="section-kicker">Technical Skills</div>
-          <h2>A practical stack for system-level engineering.</h2>
+          <article class="xp-row reveal" style="--stagger: 100ms">
+            <div class="xp-meta">
+              <time>SEPT 2023 → APR 2024</time>
+              <div class="org">Carleton University</div>
+              <div class="loc">Ottawa, Ontario</div>
+            </div>
+            <div class="xp-body">
+              <h3>Undergraduate Research Assistant</h3>
+              <ul>
+                <li>Improved elevator dispatch efficiency in a Java simulation by 60% by designing a multi-threaded scheduler coordinating elevator, floor, and request-handling subsystems concurrently.</li>
+                <li>Reduced integration defects with a comprehensive suite of unit and integration tests that surfaced race conditions and synchronization bugs before merge.</li>
+                <li>Hardened the simulation against deadlocks and dropped requests via synchronized state management and thread-safe message passing.</li>
+              </ul>
+            </div>
+          </article>
         </div>
-        <p>
-          Skills grouped by the way I use them: backend/product engineering, embedded systems, robotics, data platforms, tooling, testing, and networking fundamentals.
-        </p>
-      </div>
+      </section>
 
-      <div class="skills-grid">
-        <article class="skill-card reveal">
-          <h3>Programming</h3>
-          <div class="skill-list">
-            <span>C</span><span>C++</span><span>Python</span><span>Java</span><span>SQL</span><span>JavaScript</span><span>HTML</span><span>CSS</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Embedded & Systems</h3>
-          <div class="skill-list">
-            <span>Linux</span><span>Embedded Systems</span><span>Real-Time Systems</span><span>System-Level Debugging</span><span>Logging</span><span>Validation</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Robotics & Autonomy</h3>
-          <div class="skill-list">
-            <span>ROS 2</span><span>GNSS</span><span>IMU</span><span>Sensor Fusion</span><span>EKF</span><span>Jetson AGX Orin</span><span>Arduino</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Data & AI</h3>
-          <div class="skill-list">
-            <span>Databricks</span><span>PySpark</span><span>Apache Spark</span><span>TensorFlow</span><span>Keras</span><span>MLlib</span><span>Data Pipelines</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Frameworks & Concepts</h3>
-          <div class="skill-list">
-            <span>Flask</span><span>REST APIs</span><span>OOP</span><span>Data Structures</span><span>Algorithms</span><span>Design Patterns</span><span>MVC/MVVM</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Tools & Workflow</h3>
-          <div class="skill-list">
-            <span>Git</span><span>GitHub</span><span>JIRA</span><span>Agile/Scrum</span><span>CI/CD</span><span>Jenkins</span><span>VS Code</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Testing</h3>
-          <div class="skill-list">
-            <span>Unit Testing</span><span>TDD Basics</span><span>Debugging</span><span>Integration Testing</span><span>System Validation</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Databases</h3>
-          <div class="skill-list">
-            <span>SQLite</span><span>PostgreSQL</span><span>Schema Design</span><span>CRUD</span><span>Data Validation</span>
-          </div>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>Networking & Cloud</h3>
-          <div class="skill-list">
-            <span>Distributed Communication</span><span>Ethernet Basics</span><span>AWS</span><span>GCP</span><span>SSH</span><span>Linux Services</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="organization">
-  <div class="section-heading reveal">
-    <div>
-      <div class="section-kicker">Organization</div>
-      <h2>Engineering Collaboration & Capstone Work.</h2>
-    </div>
-    <p>
-      Active contributor within the Carleton Autonomous Aerial Vehicle (AAV) Capstone organization,
-      collaborating on robotics infrastructure, ROS2 modules, GNSS integration, and embedded systems.
-    </p>
-  </div>
-
-  <div class="about-card reveal">
-    <div>
-      <p>
-        Contributed to ROS2-based subsystems including navigation-server, GNSS modules, camera publishing nodes, and interface definitions.
-        Worked within a multi-repository architecture emphasizing modular design, testing, and distributed robotics communication.
-      </p>
-    </div>
-    <div class="experience-note">
-      <h3>Carleton-AAV-Capstone · Robotics Team</h3>
-      <ul>
-        <li>Developed GNSS integration modules and sensor pipelines.</li>
-        <li>Contributed to ROS2 interface definitions and modular architecture.</li>
-        <li>Collaborated within a 16-member engineering organization.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-    <section id="contact">
-      <div class="contact-card reveal">
-        <div>
-          <h2>Let’s build something reliable.</h2>
-          <p>
-            Open to full-time roles across backend systems, product development, embedded software, robotics, data systems, and autonomous technology.
-          </p>
+      <!-- ================= PROJECTS ================= -->
+      <section id="projects">
+        <div class="section-head reveal">
+          <div class="kicker">projects/</div>
+          <h2>Selected work across data, robotics, and embedded systems.</h2>
+          <p>Each visual below is a live illustration of the system it describes. Filter with Software / Hardware above.</p>
         </div>
-        <div class="contact-links">
-          <a href="mailto:karthikarjun013@gmail.com">Email <span>↗</span></a>
-          <a href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
-          <a href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
-          <a href="https://karthikeyanbhavanishankar.github.io" target="_blank" rel="noreferrer">Portfolio <span>↗</span></a>
+
+        <div class="bento">
+          <!-- 01 · ROS 2 localization — GNSS trajectory scene -->
+          <article class="card span-4 tilt reveal" data-track="software hardware">
+            <div class="card-media">
+              <svg viewBox="0 0 640 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="GNSS trajectory visualization: a noisy raw path and a smooth fused path">
+                <!-- map grid -->
+                <g stroke="rgba(255,255,255,0.05)"><path d="M0 60H640M0 120H640M0 180H640M0 240H640M80 0V300M160 0V300M240 0V300M320 0V300M400 0V300M480 0V300M560 0V300"/></g>
+                <!-- satellites -->
+                <g fill="#8b5cf6">
+                  <circle cx="90" cy="42" r="4"/><circle class="sat-ping" cx="90" cy="42" r="8" fill="none" stroke="#8b5cf6" stroke-width="1.5"/>
+                  <circle cx="540" cy="60" r="4"/><circle class="sat-ping" cx="540" cy="60" r="8" fill="none" stroke="#8b5cf6" stroke-width="1.5" style="animation-delay:1.2s"/>
+                </g>
+                <!-- raw noisy GNSS path -->
+                <path class="traj-raw" d="M40 250 C 90 200, 110 245, 150 205 S 230 235, 270 185 S 350 205, 390 150 S 470 175, 510 120 S 570 130, 600 85"
+                      fill="none" stroke="rgba(245,158,11,0.55)" stroke-width="2"/>
+                <!-- EKF fused path -->
+                <path class="traj-fused" d="M40 252 C 130 215, 220 205, 300 168 S 470 130, 600 82"
+                      fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+                <circle class="rover-dot" cx="600" cy="82" r="6" fill="#3b82f6"/>
+                <!-- legend -->
+                <g font-family="JetBrains Mono, monospace" font-size="11">
+                  <rect x="22" y="20" width="196" height="52" rx="8" fill="rgba(8,8,12,0.7)" stroke="rgba(255,255,255,0.1)"/>
+                  <line x1="36" y1="38" x2="60" y2="38" stroke="rgba(245,158,11,0.8)" stroke-width="2" stroke-dasharray="4 4"/>
+                  <text x="68" y="42" fill="#8a8a94">raw GNSS</text>
+                  <line x1="36" y1="58" x2="60" y2="58" stroke="#3b82f6" stroke-width="3"/>
+                  <text x="68" y="62" fill="#f5f5f7">EKF fused · −80% drift</text>
+                </g>
+              </svg>
+            </div>
+            <div class="card-body">
+              <span class="card-tag">research · sept 2024 → apr 2025</span>
+              <h3>ROS 2 GNSS/IMU Localization System</h3>
+              <p>
+                Real-time robot localization pipeline in ROS 2, fusing GNSS and IMU data through an Extended Kalman Filter.
+                Sensor fusion, parameter tuning, and system-level debugging on NVIDIA Jetson AGX Orin; RTK streaming and
+                node deployment automated with systemd, validated through outdoor field testing and RViz2.
+              </p>
+              <div class="stack">
+                <span class="pill">ROS 2</span><span class="pill">Python</span><span class="pill">C++</span>
+                <span class="pill">EKF</span><span class="pill">Jetson AGX Orin</span><span class="pill">Linux</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 02 · Data validation — pipeline scene -->
+          <article class="card span-2 tilt reveal" data-track="software" style="--stagger: 80ms">
+            <div class="card-media">
+              <svg viewBox="0 0 320 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Data pipeline with packets flowing through validation stages">
+                <line x1="10" y1="85" x2="310" y2="85" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+                <!-- stages -->
+                <g font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">
+                  <rect x="30" y="60" width="58" height="50" rx="10" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.5)"/>
+                  <text x="59" y="88" fill="#9ec2ff">ingest</text>
+                  <rect class="stage-ok" x="130" y="60" width="58" height="50" rx="10" fill="rgba(139,92,246,0.12)" stroke="rgba(139,92,246,0.5)"/>
+                  <text x="159" y="82" fill="#c9b3ff">validate</text>
+                  <text x="159" y="96" fill="#22c55e">✓ schema</text>
+                  <rect x="230" y="60" width="58" height="50" rx="10" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.45)"/>
+                  <text x="259" y="88" fill="#6ee7a0">delta</text>
+                </g>
+                <!-- packets -->
+                <rect class="packet" x="0" y="80" width="12" height="10" rx="3" fill="#3b82f6"/>
+                <rect class="packet p2" x="0" y="80" width="12" height="10" rx="3" fill="#8b5cf6"/>
+                <rect class="packet p3" x="0" y="80" width="12" height="10" rx="3" fill="#22c55e"/>
+              </svg>
+            </div>
+            <div class="card-body">
+              <span class="card-tag">data · kdata ai</span>
+              <h3>Distributed Data Validation at Scale</h3>
+              <p>Rule-based, schema-aware validation engines across Spark and Delta Lake workloads in Databricks, orchestrated through CI/CD.</p>
+              <div class="stack">
+                <span class="pill">Databricks</span><span class="pill">Spark</span><span class="pill">Delta Lake</span><span class="pill">CI/CD</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 03 · Greenhouse — gauge + irrigation scene -->
+          <article class="card span-3 tilt reveal" data-track="hardware" style="--stagger: 120ms">
+            <div class="card-media">
+              <svg viewBox="0 0 480 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Greenhouse sensor gauge and irrigation animation">
+                <!-- gauge -->
+                <g transform="translate(60,60)">
+                  <path d="M-46 30 A 55 55 0 0 1 62 22" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="9" stroke-linecap="round"/>
+                  <path d="M-46 30 A 55 55 0 0 1 20 -52" fill="none" stroke="#3b82f6" stroke-width="9" stroke-linecap="round"/>
+                  <line class="needle" x1="0" y1="-2" x2="0" y2="-42" stroke="#f5f5f7" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="0" cy="-2" r="5" fill="#f5f5f7"/>
+                  <text y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#8a8a94">soil moisture</text>
+                </g>
+                <!-- readouts -->
+                <g font-family="JetBrains Mono, monospace" font-size="10">
+                  <rect x="160" y="26" width="140" height="26" rx="7" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+                  <text x="172" y="43" fill="#8a8a94">temp</text><text x="288" y="43" fill="#7ab3ff" text-anchor="end">23.4°C</text>
+                  <rect x="160" y="60" width="140" height="26" rx="7" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+                  <text x="172" y="77" fill="#8a8a94">humid</text><text x="288" y="77" fill="#7ab3ff" text-anchor="end">61%</text>
+                  <rect x="160" y="94" width="140" height="26" rx="7" fill="rgba(34,197,94,0.08)" stroke="rgba(34,197,94,0.4)"/>
+                  <text x="172" y="111" fill="#8a8a94">pump</text><text x="288" y="111" fill="#22c55e" text-anchor="end">ON</text>
+                </g>
+                <!-- irrigation + plant -->
+                <g transform="translate(360,40)">
+                  <rect x="8" y="0" width="34" height="18" rx="5" fill="rgba(59,130,246,0.25)" stroke="rgba(59,130,246,0.6)"/>
+                  <circle class="drop" cx="25" cy="28" r="4" fill="#3b82f6"/>
+                  <circle class="drop d2" cx="25" cy="28" r="4" fill="#3b82f6"/>
+                  <path d="M25 92 C 25 74, 12 72, 8 60 M25 92 C 25 70, 40 70, 44 56 M25 92 V 58" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <rect x="2" y="92" width="46" height="14" rx="4" fill="rgba(245,158,11,0.25)" stroke="rgba(245,158,11,0.5)"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card-body">
+              <span class="card-tag">embedded · jan → apr 2026</span>
+              <h3>Greenhouse Monitoring & Irrigation System</h3>
+              <p>
+                Raspberry Pi system reading soil moisture, temperature, and humidity from capacitive and I2C (AHT20) sensors.
+                Threshold logic drives a transistor-driven relay via GPIO for pump control, with SQLite logging and a live dashboard.
+              </p>
+              <div class="stack">
+                <span class="pill">Raspberry Pi</span><span class="pill">Python</span><span class="pill">I2C</span>
+                <span class="pill">GPIO</span><span class="pill">SQLite</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 04 · Flask API — code editor scene -->
+          <article class="card span-3 tilt reveal" data-track="software" style="--stagger: 160ms">
+            <div class="card-media">
+              <svg viewBox="0 0 480 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Code editor showing a Flask API route">
+                <rect x="24" y="18" width="432" height="186" rx="12" fill="rgba(10,10,14,0.9)" stroke="rgba(255,255,255,0.1)"/>
+                <circle cx="46" cy="38" r="4.5" fill="#ff5f57"/><circle cx="62" cy="38" r="4.5" fill="#febc2e"/><circle cx="78" cy="38" r="4.5" fill="#28c840"/>
+                <g font-family="JetBrains Mono, monospace" font-size="11.5">
+                  <text class="code-line" x="44" y="70"><tspan fill="#c586c0">@app.route</tspan><tspan fill="#d4d4d4">(</tspan><tspan fill="#ce9178">"/api/activities"</tspan><tspan fill="#d4d4d4">, methods=[</tspan><tspan fill="#ce9178">"POST"</tspan><tspan fill="#d4d4d4">])</tspan></text>
+                  <text class="code-line" x="44" y="92"><tspan fill="#569cd6">def</tspan> <tspan fill="#dcdcaa">log_activity</tspan><tspan fill="#d4d4d4">():</tspan></text>
+                  <text class="code-line" x="64" y="114"><tspan fill="#9cdcfe">payload</tspan><tspan fill="#d4d4d4"> = request.get_json()</tspan></text>
+                  <text class="code-line" x="64" y="136"><tspan fill="#c586c0">if not</tspan><tspan fill="#d4d4d4"> validate(</tspan><tspan fill="#9cdcfe">payload</tspan><tspan fill="#d4d4d4">):</tspan></text>
+                  <text class="code-line" x="84" y="158"><tspan fill="#c586c0">return</tspan><tspan fill="#d4d4d4"> jsonify(error), </tspan><tspan fill="#b5cea8">400</tspan></text>
+                  <text class="code-line" x="64" y="180"><tspan fill="#c586c0">return</tspan><tspan fill="#d4d4d4"> db.insert(</tspan><tspan fill="#9cdcfe">payload</tspan><tspan fill="#d4d4d4">), </tspan><tspan fill="#b5cea8">201</tspan></text>
+                </g>
+              </svg>
+            </div>
+            <div class="card-body">
+              <span class="card-tag">backend · may → june 2026</span>
+              <h3>Flask Fitness Tracking API</h3>
+              <p>
+                RESTful API in Flask with SQLite managing user activity and fitness data — robust CRUD endpoints, input
+                validation, modular backend structure, and structured logging with unit tests.
+              </p>
+              <div class="stack">
+                <span class="pill">Flask</span><span class="pill">Python</span><span class="pill">SQLite</span><span class="pill">REST</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 05 · Snowplow robot — sensor sweep scene -->
+          <article class="card span-3 tilt reveal" data-track="hardware" style="--stagger: 120ms">
+            <div class="card-media">
+              <svg viewBox="0 0 480 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Top-down robot with sweeping sensor cones avoiding obstacles">
+                <g stroke="rgba(255,255,255,0.05)"><path d="M0 55H480M0 110H480M0 165H480M96 0V220M192 0V220M288 0V220M384 0V220"/></g>
+                <!-- obstacles -->
+                <rect x="330" y="60" width="26" height="26" rx="6" fill="rgba(245,158,11,0.3)" stroke="rgba(245,158,11,0.6)"/>
+                <rect x="360" y="140" width="26" height="26" rx="6" fill="rgba(245,158,11,0.3)" stroke="rgba(245,158,11,0.6)"/>
+                <!-- sensor cone -->
+                <g transform="translate(180,110)">
+                  <path class="cone" d="M30 0 L 150 -52 L 150 52 Z" fill="rgba(59,130,246,0.14)" stroke="rgba(59,130,246,0.35)"/>
+                  <!-- robot chassis -->
+                  <rect x="-38" y="-26" width="72" height="52" rx="12" fill="rgba(139,92,246,0.2)" stroke="#8b5cf6" stroke-width="2"/>
+                  <rect x="-46" y="-30" width="10" height="18" rx="3" fill="#3b82f6"/>
+                  <rect x="-46" y="12" width="10" height="18" rx="3" fill="#3b82f6"/>
+                  <rect x="26" y="-30" width="10" height="18" rx="3" fill="#3b82f6"/>
+                  <rect x="26" y="12" width="10" height="18" rx="3" fill="#3b82f6"/>
+                  <!-- plow -->
+                  <path d="M40 -30 Q 58 0 40 30" fill="none" stroke="#f5f5f7" stroke-width="4" stroke-linecap="round"/>
+                  <circle class="led" cx="0" cy="0" r="5" fill="#22c55e"/>
+                </g>
+                <text x="24" y="34" font-family="JetBrains Mono, monospace" font-size="10" fill="#8a8a94">FSM: SCAN → AVOID → PLOW</text>
+              </svg>
+            </div>
+            <div class="card-body">
+              <span class="card-tag">embedded · sept → dec 2025</span>
+              <h3>Autonomous Snowplowing Robot</h3>
+              <p>
+                Arduino robot integrating IR, ultrasonic, and IMU sensors for real-time obstacle detection with sub-second
+                response. FSM-based control with PWM motor drive, watchdog timers, and fail-safe shutdown logic.
+              </p>
+              <div class="stack">
+                <span class="pill">Embedded C++</span><span class="pill">Arduino</span><span class="pill">FSM</span><span class="pill">PWM</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 06 · Hardware craft — circuit board + oscilloscope scene -->
+          <article class="card span-3 tilt reveal" data-track="hardware" style="--stagger: 160ms">
+            <div class="card-media">
+              <svg viewBox="0 0 480 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Circuit board with pulsing traces and an oscilloscope waveform">
+                <!-- PCB -->
+                <rect x="26" y="26" width="200" height="168" rx="12" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.3)"/>
+                <rect x="86" y="86" width="56" height="56" rx="6" fill="rgba(10,10,14,0.9)" stroke="rgba(255,255,255,0.25)"/>
+                <text x="114" y="118" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8a8a94">MCU</text>
+                <!-- pins -->
+                <g stroke="rgba(255,255,255,0.3)" stroke-width="2">
+                  <path d="M96 86V78M108 86V78M120 86V78M132 86V78M96 142v8M108 142v8M120 142v8M132 142v8M86 96h-8M86 108h-8M86 120h-8M86 132h-8M142 96h8M142 108h8M142 120h8M142 132h8"/>
+                </g>
+                <!-- traces with current pulses -->
+                <g fill="none" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M78 96 H 52 V 48 H 190" stroke="rgba(59,130,246,0.25)"/>
+                  <path class="trace" d="M78 96 H 52 V 48 H 190" stroke="#3b82f6"/>
+                  <path d="M150 108 H 196 V 168 H 60" stroke="rgba(139,92,246,0.25)"/>
+                  <path class="trace t2" d="M150 108 H 196 V 168 H 60" stroke="#8b5cf6"/>
+                  <path d="M120 150 V 180 H 190" stroke="rgba(34,197,94,0.25)"/>
+                  <path class="trace t3" d="M120 150 V 180 H 190" stroke="#22c55e"/>
+                  <path d="M108 78 V 40 H 60" stroke="rgba(245,158,11,0.25)"/>
+                  <path class="trace t4" d="M108 78 V 40 H 60" stroke="#f59e0b"/>
+                </g>
+                <circle class="led" cx="196" cy="48" r="4" fill="#3b82f6"/>
+                <circle class="led l2" cx="60" cy="168" r="4" fill="#8b5cf6"/>
+                <circle class="led l3" cx="196" cy="180" r="4" fill="#22c55e"/>
+                <!-- oscilloscope -->
+                <rect x="252" y="26" width="202" height="168" rx="12" fill="rgba(10,10,14,0.9)" stroke="rgba(255,255,255,0.12)"/>
+                <g stroke="rgba(255,255,255,0.06)"><path d="M252 68H454M252 110H454M252 152H454M292 26V194M332 26V194M372 26V194M412 26V194"/></g>
+                <path class="scope-wave" d="M258 110 h18 v-42 h22 v84 h22 v-84 h22 v42 h16 l8 -30 l12 60 l12 -60 l12 30 h22 v-42 h22 v42 h10"
+                      fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linejoin="round"/>
+                <text x="264" y="46" font-family="JetBrains Mono, monospace" font-size="9" fill="#6ee7a0">CH1 · PWM 490Hz</text>
+              </svg>
+            </div>
+            <div class="card-body">
+              <span class="card-tag">hardware toolkit</span>
+              <h3>Digital Logic, FPGA & Bench Work</h3>
+              <p>
+                Verilog/VHDL and digital logic design on FPGA, microcontroller bring-up on Arduino and Raspberry Pi,
+                I2C/SPI/UART buses, GPIO/PWM/ADC, sensor integration, and oscilloscope-driven debugging.
+              </p>
+              <div class="stack">
+                <span class="pill">Verilog</span><span class="pill">VHDL</span><span class="pill">FPGA</span>
+                <span class="pill">I2C/SPI/UART</span><span class="pill">Oscilloscope</span>
+              </div>
+            </div>
+          </article>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- ================= SKILLS ================= -->
+      <section id="skills">
+        <div class="section-head reveal">
+          <div class="kicker">skills.yaml</div>
+          <h2>A stack spanning software, data, and silicon.</h2>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-group reveal" data-track="software hardware">
+            <h3>Languages</h3>
+            <div class="chips"><span>Python</span><span>Java</span><span>C</span><span>C++</span><span>JavaScript</span><span>SQL</span><span>HTML/CSS</span></div>
+          </article>
+          <article class="skill-group reveal" data-track="hardware" style="--stagger: 80ms">
+            <h3>Hardware & Embedded</h3>
+            <div class="chips"><span>Verilog</span><span>VHDL</span><span>FPGA</span><span>Digital Logic</span><span>Embedded C/C++</span><span>Arduino</span><span>Raspberry Pi</span><span>I2C/SPI/UART</span><span>GPIO/PWM/ADC</span><span>Sensor Integration</span><span>Oscilloscope</span><span>RISC Architecture</span></div>
+          </article>
+          <article class="skill-group reveal" data-track="software" style="--stagger: 160ms">
+            <h3>Libraries & Frameworks</h3>
+            <div class="chips"><span>Flask</span><span>React</span><span>Node.js</span><span>TensorFlow</span><span>Keras</span><span>scikit-learn</span><span>NumPy</span><span>pandas</span></div>
+          </article>
+          <article class="skill-group reveal" data-track="software">
+            <h3>Data & Analytics</h3>
+            <div class="chips"><span>Apache Spark</span><span>Databricks</span><span>PostgreSQL</span><span>SQLite</span><span>Power BI</span><span>Tableau</span></div>
+          </article>
+          <article class="skill-group reveal" data-track="software hardware" style="--stagger: 80ms">
+            <h3>Tools & Platforms</h3>
+            <div class="chips"><span>Git</span><span>GitHub</span><span>Linux</span><span>AWS</span><span>GCP</span><span>CI/CD</span><span>Jenkins</span><span>Jira</span><span>VS Code</span><span>IntelliJ</span></div>
+          </article>
+          <article class="skill-group reveal" data-track="software hardware" style="--stagger: 160ms">
+            <h3>Robotics & Real-Time</h3>
+            <div class="chips"><span>ROS 2</span><span>GNSS / RTK</span><span>IMU</span><span>Sensor Fusion</span><span>EKF</span><span>Real-Time Systems</span><span>systemd</span></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= EDUCATION ================= -->
+      <section id="education">
+        <div class="edu reveal">
+          <div>
+            <div class="kicker">education</div>
+            <h3>Carleton University — B.Eng, Computer Systems Engineering</h3>
+            <p>
+              Jan 2021 – Apr 2026 · Ottawa, Ontario. Coursework: Data Structures & Algorithms, OOP, Software Engineering,
+              Operating Systems, Databases, Computer Systems Design, Real-Time Systems.
+            </p>
+          </div>
+          <div class="awards">
+            <span>🏅 International Award of Excellence</span>
+            <span>🏅 Henry Marshall Tory Scholarship</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CONTACT ================= -->
+      <section id="contact">
+        <div class="contact reveal">
+          <h2>Let's build something reliable.</h2>
+          <p>Open to full-time roles across backend systems, embedded software, robotics, data platforms, and autonomous technology.</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:karthikarjun013@gmail.com">Email me</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/karthikeyan-bhavani-shankar/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://github.com/KarthikeyanBhavaniShankar" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+          <div class="contact-meta">
+            <a href="tel:+13439877918">343-987-7918</a><span>·</span>
+            <a href="mailto:karthikarjun013@gmail.com">karthikarjun013@gmail.com</a><span>·</span>
+            <span>Ottawa, Ontario</span>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer class="page">
-    © 2026 Karthikeyan Bhavani Shankar · Computer Systems Engineering Graduate
+  <footer>
+    © 2026 Karthikeyan Bhavani Shankar<br>
+    <span class="mono">// compiled with zero warnings</span>
   </footer>
 
   <script>
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
+    (() => {
+      "use strict";
+      const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isTouch = matchMedia("(hover: none)").matches;
+
+      /* ---------- Scroll progress + condensing nav ---------- */
+      const nav = document.getElementById("nav");
+      const progress = document.getElementById("progress");
+      let ticking = false;
+      addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const max = document.documentElement.scrollHeight - innerHeight;
+          progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
+          nav.classList.toggle("scrolled", scrollY > 24);
+          ticking = false;
+        });
+      }, { passive: true });
+
+      /* ---------- Reveals ---------- */
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      /* ---------- Terminal typing sequence ---------- */
+      const term = document.getElementById("terminal");
+      const script = [
+        { html: `<span class="t-prompt">➜</span> <span class="t-cmd">whoami</span>`, type: true },
+        { html: `<span class="t-dim">Karthikeyan Bhavani Shankar — Computer Systems Engineering, Carleton</span>` },
+        { html: `<span class="t-prompt">➜</span> <span class="t-cmd">cat focus.txt</span>`, type: true },
+        { html: `<span class="t-blue">backend & data platforms</span> <span class="t-dim">·</span> <span class="t-violet">robotics & embedded</span>` },
+        { html: `<span class="t-prompt">➜</span> <span class="t-cmd">./run_highlights.sh</span>`, type: true },
+        { html: `<span class="t-ok">✔</span> <span class="t-dim">GNSS/IMU drift reduced</span> <span class="t-blue">−80%</span> <span class="t-dim">(field tested)</span>` },
+        { html: `<span class="t-ok">✔</span> <span class="t-dim">elevator dispatch efficiency</span> <span class="t-blue">+60%</span> <span class="t-dim">(multithreaded)</span>` },
+        { html: `<span class="t-ok">✔</span> <span class="t-dim">validation engines shipped to prod on Databricks</span>` },
+        { html: `<span class="t-prompt">➜</span> <span class="t-cmd">status --hiring</span>`, type: true },
+        { html: `<span class="t-ok">● open to full-time roles</span> <span class="t-dim">— Ottawa / remote</span>` },
+      ];
+
+      function runTerminal() {
+        if (reducedMotion) {
+          term.innerHTML = script.map((s) => `<div class="ln">${s.html}</div>`).join("");
+          return;
         }
-      });
-    }, { threshold: 0.12 });
+        let i = 0;
+        const caret = document.createElement("span");
+        caret.className = "caret";
 
-    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+        function nextLine() {
+          if (i >= script.length) { term.appendChild(caret); return; }
+          const entry = script[i++];
+          const div = document.createElement("div");
+          div.className = "ln";
+          term.appendChild(div);
 
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-
-        const counter = entry.target;
-        const target = Number(counter.dataset.target || 0);
-        const duration = 1300;
-        const startTime = performance.now();
-
-        const update = (currentTime) => {
-          const progress = Math.min((currentTime - startTime) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          counter.textContent = Math.round(target * eased);
-
-          if (progress < 1) {
-            requestAnimationFrame(update);
+          if (entry.type) {
+            // type command character by character (strip tags for length, re-render html progressively)
+            const tmp = document.createElement("div");
+            tmp.innerHTML = entry.html;
+            const text = tmp.textContent;
+            let c = 0;
+            div.appendChild(caret);
+            const typer = setInterval(() => {
+              c++;
+              div.textContent = text.slice(0, c);
+              div.appendChild(caret);
+              if (c >= text.length) {
+                clearInterval(typer);
+                div.innerHTML = entry.html; // swap in colored version
+                setTimeout(nextLine, 220);
+              }
+            }, 34);
           } else {
-            counter.textContent = target;
+            div.innerHTML = entry.html;
+            setTimeout(nextLine, 300);
           }
-        };
+        }
+        nextLine();
+      }
+      // start when hero is on screen
+      const termIO = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { runTerminal(); termIO.disconnect(); }
+      }, { threshold: 0.3 });
+      termIO.observe(term);
 
-        requestAnimationFrame(update);
-        counterObserver.unobserve(counter);
-      });
-    }, { threshold: 0.6 });
+      /* ---------- Tech ticker (built + duplicated for seamless loop) ---------- */
+      const tech = ["Python","C++","Java","ROS 2","Databricks","Apache Spark","Flask","React","Node.js","TensorFlow","Verilog","VHDL","FPGA","Arduino","Raspberry Pi","Linux","AWS","GCP","PostgreSQL","Jenkins","Git"];
+      const ticker = document.getElementById("ticker");
+      ticker.innerHTML = [...tech, ...tech].map((t) => `<span>${t}</span>`).join("");
 
-    document.querySelectorAll(".counter").forEach((counter) => counterObserver.observe(counter));
+      /* ---------- 3D tilt + spotlight on project cards ---------- */
+      if (!isTouch && !reducedMotion) {
+        document.querySelectorAll(".tilt").forEach((card) => {
+          let raf = null;
+          card.addEventListener("pointermove", (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;
+            const py = (e.clientY - r.top) / r.height;
+            card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+            card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+            if (raf) return;
+            raf = requestAnimationFrame(() => {
+              card.style.transform = `perspective(1200px) rotateX(${((0.5 - py) * 6).toFixed(2)}deg) rotateY(${((px - 0.5) * 8).toFixed(2)}deg) translateY(-4px)`;
+              raf = null;
+            });
+          }, { passive: true });
+          card.addEventListener("pointerleave", () => {
+            card.style.transform = "";
+          });
+        });
+      }
+
+      /* ---------- Software / Hardware filter ---------- */
+      const toggle = document.querySelector(".track-toggle");
+      const thumb = toggle.querySelector(".track-thumb");
+      const buttons = [...toggle.querySelectorAll("button")];
+      const filterables = [...document.querySelectorAll("[data-track]")];
+      const heroSub = document.getElementById("heroSub");
+
+      const taglines = {
+        all: `I'm <strong>Karthikeyan Bhavani Shankar</strong> — Computer Systems Engineering, Carleton University (Apr 2026). Backend & data platforms, real-time robotics, and embedded systems.`,
+        software: `I'm <strong>Karthikeyan Bhavani Shankar</strong> — a software engineer focused on <strong>backend systems, distributed data platforms, and production reliability</strong> with Spark, Databricks, and Python.`,
+        hardware: `I'm <strong>Karthikeyan Bhavani Shankar</strong> — a hardware-minded engineer working across <strong>embedded C/C++, FPGA and digital logic, sensor integration, and real-time control</strong>.`,
+      };
+
+      const moveThumb = (btn) => { thumb.style.left = btn.offsetLeft + "px"; thumb.style.width = btn.offsetWidth + "px"; };
+
+      function setTrack(track, btn) {
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        moveThumb(btn);
+        heroSub.innerHTML = taglines[track];
+        filterables.forEach((el) => {
+          const tracks = el.dataset.track.split(" ");
+          el.classList.toggle("dim", track !== "all" && !tracks.includes(track));
+        });
+      }
+      buttons.forEach((btn) => btn.addEventListener("click", () => setTrack(btn.dataset.track, btn)));
+      const initThumb = () => moveThumb(buttons.find((b) => b.getAttribute("aria-pressed") === "true"));
+      requestAnimationFrame(initThumb);
+      addEventListener("resize", initThumb, { passive: true });
+    })();
   </script>
 </body>
 </html>
