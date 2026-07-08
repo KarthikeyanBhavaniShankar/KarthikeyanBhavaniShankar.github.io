@@ -509,6 +509,54 @@
     footer .mono { font-family: var(--mono); font-size: 0.78rem; opacity: 0.7; }
 
     /* ================================================================
+       MUSIC TOGGLE — floating button, click-to-play (browser policy
+       requires a user gesture before audio can play; this is that
+       gesture). Persists on/off across reloads via localStorage.
+       ================================================================ */
+    #music-toggle {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 150;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(10, 10, 14, 0.8);
+      backdrop-filter: blur(14px);
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: transform 200ms var(--ease), border-color 200ms ease, box-shadow 200ms ease;
+    }
+    #music-toggle:hover { transform: scale(1.06); border-color: rgba(255,255,255,0.25); }
+    #music-toggle svg { width: 20px; height: 20px; }
+
+    /* Playing state: gentle pulsing ring to show it's live */
+    #music-toggle.playing { border-color: rgba(59,130,246,0.5); animation: musicPulse 2.4s ease infinite; }
+    @keyframes musicPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.45), 0 10px 30px rgba(0,0,0,0.4); }
+      70%  { box-shadow: 0 0 0 14px rgba(59,130,246,0), 0 10px 30px rgba(0,0,0,0.4); }
+      100% { box-shadow: 0 0 0 0 rgba(59,130,246,0), 0 10px 30px rgba(0,0,0,0.4); }
+    }
+
+    #music-toggle .icon-off { display: block; }
+    #music-toggle .icon-on { display: none; }
+    #music-toggle.playing .icon-off { display: none; }
+    #music-toggle.playing .icon-on { display: block; }
+
+    @media (max-width: 640px) {
+      #music-toggle { right: 14px; bottom: 14px; width: 46px; height: 46px; }
+      #music-toggle svg { width: 18px; height: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #music-toggle.playing { animation: none; }
+    }
+
+    /* ================================================================
        RESPONSIVE
        ================================================================ */
     @media (max-width: 980px) {
@@ -962,6 +1010,31 @@
     <span class="mono">// compiled with zero warnings</span>
   </footer>
 
+  <!-- ================================================================
+       BACKGROUND MUSIC
+       Browsers block audio with sound from playing until the visitor
+       interacts with the page — this button IS that interaction.
+       To enable: add an MP3 you have the rights to use (a track you
+       licensed, or something from a royalty-free library) next to
+       this HTML file, then set the src below to its filename.
+       ================================================================ -->
+  <audio id="bg-music" loop preload="none">
+    <source src="theme.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="music-toggle" type="button" aria-pressed="false" aria-label="Play background music">
+    <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
+      <line x1="16" y1="9" x2="21" y2="15"/>
+      <line x1="21" y1="9" x2="16" y2="15"/>
+    </svg>
+    <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
+      <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+      <path d="M18 6a9 9 0 0 1 0 12"/>
+    </svg>
+  </button>
+
   <script>
     (() => {
       "use strict";
@@ -1105,6 +1178,36 @@
       const initThumb = () => moveThumb(buttons.find((b) => b.getAttribute("aria-pressed") === "true"));
       requestAnimationFrame(initThumb);
       addEventListener("resize", initThumb, { passive: true });
+
+      /* ---------- Background music toggle ----------
+         Click is the required user gesture that satisfies browser
+         autoplay policy. State (on/off) is remembered across visits;
+         actual playback always waits for a fresh click on reload,
+         since no browser will resume audio without one. */
+      const music = document.getElementById("bg-music");
+      const musicBtn = document.getElementById("music-toggle");
+      const MUSIC_KEY = "portfolio-music-enabled";
+
+      musicBtn.addEventListener("click", () => {
+        if (music.paused) {
+          music.play().then(() => {
+            musicBtn.classList.add("playing");
+            musicBtn.setAttribute("aria-pressed", "true");
+            musicBtn.setAttribute("aria-label", "Pause background music");
+            localStorage.setItem(MUSIC_KEY, "1");
+          }).catch(() => {
+            // No audio file present yet at theme.mp3 — fails silently
+            // rather than throwing an error in the console.
+            console.info("Add your own royalty-free track as theme.mp3 next to this HTML file to enable music.");
+          });
+        } else {
+          music.pause();
+          musicBtn.classList.remove("playing");
+          musicBtn.setAttribute("aria-pressed", "false");
+          musicBtn.setAttribute("aria-label", "Play background music");
+          localStorage.setItem(MUSIC_KEY, "0");
+        }
+      });
     })();
   </script>
 </body>
